@@ -1,7 +1,7 @@
 <?php
 // Projet Réservations M2L - version web mobile
 // Fonction du contrôleur CtrlCreerUtilisateur.php : traiter la demande de création d'un nouvel utilisateur
-// Ecrit le 12/10/2015 par Jim
+// Ecrit le 21/10/2015 par Jim
 
 // on vérifie si le demandeur de cette action a le niveau administrateur
 if ($_SESSION['niveauUtilisateur'] != 'administrateur') {
@@ -57,10 +57,27 @@ else {
 					include_once ('vues/VueCreerUtilisateur.php');
 				}
 				else {
-					// tout a fonctionné
-					$msgFooter = "Enregistrement effectué!";
-					$themeFooter = $themeNormal;
-					include_once ('vues/VueCreerUtilisateur.php');
+					// envoi d'un mail de confirmation de l'enregistrement
+					$sujet = "Création de votre compte dans le système de réservation de M2L";
+					$message = "L'administrateur du système de réservations de la M2L vient de vous créer un compte utilisateur.\n\n";
+					$message .= "Les données enregistrées sont :\n\n";
+					$message .= "Votre nom : " . $name . "\n";
+					$message .= "Votre mot de passe : " . $password . " (nous vous conseillons de le changer lors de la première connexion)\n";
+					$message .= "Votre niveau d'accès (0 : invité    1 : utilisateur    2 : administrateur) : " . $level . "\n";
+						
+					$ok = Outils::envoyerMail($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
+					if ( ! $ok ) {
+						// si l'envoi de mail a échoué, réaffichage de la vue avec un message explicatif
+						$msgFooter = "Enregistrement effectué.<br>L'envoi du mail à l'utilisateur a rencontré un problème !";
+						$themeFooter = $themeProbleme;
+						include_once ('vues/VueCreerUtilisateur.php');
+					}
+					else {
+						// tout a fonctionné
+						$msgFooter = "Enregistrement effectué.<br>Un mail va être envoyé à l'utilisateur !";
+						$themeFooter = $themeNormal;
+						include_once ('vues/VueCreerUtilisateur.php');
+					}
 				}
 			}
 			unset($dao);		// fermeture de la connexion à MySQL

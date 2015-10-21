@@ -14,8 +14,10 @@
 //    index.php?action=ConfirmerReservation   : pour afficher la page de confirmation d'une réservation
 //    index.php?action=AnnulerReservation     : pour afficher la page de suppression d'une réservation
 //    index.php?action=ChangerDeMdp           : pour afficher la page de changement de mot de passe
-//    index.php?action=CreerUtilisateur       : pour afficher la page de création d'un utilisateur (il faut être administrateur pour cela)
-//    index.php?action=SupprimerUtilisateur   : pour afficher la page de suppression d'un utilisateur (il faut être administrateur pour cela)
+
+// il faut être administrateur pour les 2 actions suivantes :
+//    index.php?action=CreerUtilisateur       : pour afficher la page de création d'un utilisateur 
+//    index.php?action=SupprimerUtilisateur   : pour afficher la page de suppression d'un utilisateur 
 
 session_start();		// permet d'utiliser des variables de session
 
@@ -23,9 +25,9 @@ session_start();		// permet d'utiliser des variables de session
 $debug = false;
 
 // choix des styles graphiques
-$version = "1.4.5";			// choix de la version de JQuery Mobile (voir fichier head.php) : 1.2.0,  1.2.1,  1.3.2,  1.4.5
-$themeNormal = "a";			// thème de base
-$themeProbleme = "b";		// thème utilisé pour afficher un message en cas de problème
+$version = "1.3.2";			// choix de la version de JQuery Mobile (voir fichier head.php) : 1.2.0,  1.2.1,  1.3.2,  1.4.5
+$themeNormal = "b";			// thème de base
+$themeProbleme = "a";		// thème utilisé pour afficher un message en cas de problème
 
 // on vérifie le paramètre action de l'URL
 if ( ! isset ($_GET['action']) == true)  $action = '';  else   $action = $_GET['action'];

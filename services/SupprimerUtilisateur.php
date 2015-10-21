@@ -1,6 +1,6 @@
 <?php
 // Service web du projet Réservations M2L
-// Ecrit le 21/5/2015 par Jim
+// Ecrit le 21/10/2015 par Jim
 
 // Ce service web permet à un administrateur authentifié de supprimer un utilisateur
 // et fournit un compte-rendu d'exécution
@@ -81,7 +81,7 @@ else
 					
 					$ok = Outils::envoyerMail($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
 					if ( ! $ok )
-						TraitementAnormal("Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.");
+						TraitementAnormal("Suppression effectuée ; l'envoi du mail à l'utilisateur a rencontré un problème.");
 					else
 						TraitementNormal();
 				}
@@ -122,7 +122,7 @@ function TraitementNormal()
 	$elt_data = $doc->createElement('data');
 	$doc->appendChild($elt_data);
 	// place l'élément 'reponse' juste après l'élément 'data'
-	$elt_reponse = $doc->createElement('reponse', "Enregistrement effectué.");
+	$elt_reponse = $doc->createElement('reponse', "Suppression effectuée ; un mail va être envoyé à l'utilisateur.");
 	$elt_data->appendChild($elt_reponse); 
 	return;
 }

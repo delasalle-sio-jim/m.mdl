@@ -1,7 +1,7 @@
 <?php
 	// Projet Réservations M2L - version web mobile
 	// Fonction de la vue VueCreerUtilisateur.php : visualiser la demande de création d'un nouvel utilisateur
-	// Ecrit le 12/10/2015 par Jim
+	// Ecrit le 21/10/2015 par Jim
 ?>
 <!doctype html>
 <html>
@@ -22,7 +22,7 @@
 						<input type="text" name="name" id="name" placeholder="Entrez le nom de l'utilisateur" value="<?php echo $name; ?>">
 					</div>
 					<div data-role="fieldcontain" class="ui-hide-label">
-						<label for="email">Mot de passe :</label>
+						<label for="email">Adresse mail :</label>
 						<input type="email" name="email" id="email" placeholder="Entrez l'adresse mail" value="<?php echo $email; ?>">
 					</div>
 					<div data-role="fieldcontain">

@@ -1,6 +1,6 @@
 <?php
 // Service web du projet Réservations M2L
-// Ecrit le 21/5/2015 par Jim
+// Ecrit le 21/10/2015 par Jim
 
 // Ce service web permet à un administrateur authentifié d'enregistrer un nouvel utilisateur
 // et fournit un compte-rendu d'exécution
@@ -126,7 +126,7 @@ function TraitementNormal()
 	
 	$ok = Outils::envoyerMail ($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
 	if ( $ok )
-		$msg = "Enregistrement effectué.";
+		$msg = "Enregistrement effectué ; un mail va être envoyé à l'utilisateur.";
 	else
 		$msg = "Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème.";
 		

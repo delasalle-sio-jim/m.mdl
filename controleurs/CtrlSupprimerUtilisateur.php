@@ -1,7 +1,7 @@
 <?php
 // Projet Réservations M2L - version web mobile
 // Fonction du contrôleur CtrlSupprimerUtilisateur.php : traiter la demande de suppression d'un utilisateur
-// Ecrit le 12/10/2015 par Jim
+// Ecrit le 21/10/2015 par Jim
 
 // on vérifie si le demandeur de cette action a le niveau administrateur
 if ($_SESSION['niveauUtilisateur'] != 'administrateur') {
@@ -65,13 +65,13 @@ else {
 						$ok = Outils::envoyerMail($email, $sujet, $message, $ADR_MAIL_EMETTEUR);
 						if ( ! $ok ) {
 							// si l'envoi de mail a échoué, réaffichage de la vue avec un message explicatif
-							$msgFooter = "Enregistrement effectué ; l'envoi du mail à l'utilisateur a rencontré un problème !";
+							$msgFooter = "Suppression effectuée.<br>L'envoi du mail à l'utilisateur a rencontré un problème !";
 							$themeFooter = $themeProbleme;
 							include_once ('vues/VueSupprimerUtilisateur.php');
 						}
 						else {
 							// tout a fonctionné
-							$msgFooter = "Suppression effectuée !";
+							$msgFooter = "Suppression effectuée.<br>Un mail va être envoyé à l'utilisateur !";
 							$themeFooter = $themeNormal;
 							include_once ('vues/VueSupprimerUtilisateur.php');
 						}
