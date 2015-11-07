@@ -2,16 +2,16 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Test de la classe Reservation</title>
+	<title>Test de la classe Salle</title>
 	<style type="text/css">body {font-family: Arial, Helvetica, sans-serif; font-size: small;}</style>
 </head>
 <body>
 
 <?php
 // Domaine : Services web de l'application de suivi des réservations de la Maison des Ligues de Lorraine
-// Test de la classe c
+// Test de la classe Salle
 // Auteur : JM CARTRON
-// Dernière mise à jour : 21/5/2015
+// Dernière mise à jour : 5/11/2015
 
 // inclusion de la classe Salle ("include_once" peut être remplacé par "require_once")
 include_once ('Salle.class.php');
