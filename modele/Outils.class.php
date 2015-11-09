@@ -1,7 +1,7 @@
 <?php
 // -------------------------------------------------------------------------------------------------------------------------
 //                                         boite à outils de fonctions courantes
-//                       Auteur : JM Cartron                       Dernière modification : 21/5/2015
+//                       Auteur : JM Cartron                       Dernière modification : 9/11/2015
 // -------------------------------------------------------------------------------------------------------------------------
 
 // liste des méthodes statiques de cette classe (dans l'ordre d'apparition dans le fichier) :
@@ -104,8 +104,14 @@ class Outils
 	
 	// met la ville en majuscules et remplace les "SAINT" par "St"
 	public static function corrigerVille ($laVille)
-	{
-		$temporaire = strtoupper ($laVille);
+	{	$temporaire = $laVille;
+		$temporaire = str_replace ("é", "e", $temporaire);
+		$temporaire = str_replace ("è", "e", $temporaire);
+		$temporaire = str_replace ("ê", "e", $temporaire);
+		$temporaire = str_replace ("à", "a", $temporaire);
+		$temporaire = str_replace ("ô", "o", $temporaire);
+		$temporaire = str_replace ("î", "i", $temporaire);
+		$temporaire = strtoupper ($temporaire);
 		$temporaire = str_replace ("SAINTE ", "Ste ", $temporaire);
 		$temporaire = str_replace ("SAINTE-", "Ste ", $temporaire);
 		$temporaire = str_replace ("SAINT ", "St ", $temporaire);

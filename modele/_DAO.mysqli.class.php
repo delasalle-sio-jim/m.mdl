@@ -505,7 +505,7 @@ class DAO
 	
 	// fournit la liste des salles disponibles à la réservation
 	// le résultat est fourni sous forme d'une collection d'objets Salle
-	// modifié par Jim le 30/9/2015
+	// modifié par Jim le 9/11/2015
 	function listeSalles()
 	{	// préparation de la requete de recherche
 		$req = "Select mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name, mrbs_area.area_admin_email";
@@ -528,7 +528,7 @@ class DAO
 			$unAeraAdminEmail = utf8_encode($uneLigne['area_admin_email']);
 				
 			$uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAeraAdminEmail);
-			// ajout de la réservation à la collection
+			// ajout de la salle à la collection
 			$lesSalles[] = $uneSalle;
 			// extrait la ligne suivante
 	 	$uneLigne = mysqli_fetch_array ($jdd);
