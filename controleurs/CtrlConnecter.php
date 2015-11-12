@@ -1,7 +1,7 @@
 <?php
 // Projet Réservations M2L - version web mobile
 // Fonction du contrôleur CtrlConnecter.php : traiter la demande de connexion d'un utilisateur
-// Ecrit le 12/10/2015 par Jim
+// Ecrit le 12/11/2015 par Jim
 
 // Ce contrôleur vérifie l'authentification de l'utilisateur
 // si l'authentification est bonne, il affiche le menu utilisateur ou administrateur (vue VueMenu.php)
@@ -45,6 +45,8 @@ else {
 		// la méthode getNiveauUtilisateur de la classe DAO retourne les valeurs 'inconnu' ou 'utilisateur' ou 'administrateur'
 		$niveauUtilisateur = $dao->getNiveauUtilisateur($nom, $mdp);
 		
+		unset($dao);		// fermeture de la connexion à MySQL
+		
 		if ( $niveauUtilisateur == "inconnu" ) {
 			// si l'authentification est incorrecte, retour à la vue de connexion
 			$msgFooter = 'Authentification incorrecte !';
@@ -56,10 +58,8 @@ else {
 			$_SESSION['nom'] = $nom;
 			$_SESSION['mdp'] = $mdp;
 			$_SESSION['niveauUtilisateur'] = $niveauUtilisateur;
-			// affichage du menu
-			include_once ('controleurs/CtrlMenu.php');
+			// redirection vers la page de menu
+			header ("Location: index.php?action=Menu");
 		}
-		
-		unset($dao);		// fermeture de la connexion à MySQL
 	}
 }
