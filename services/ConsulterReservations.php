@@ -1,6 +1,6 @@
 <?php
 // Service web du projet Réservations M2L
-// Ecrit le 21/5/2015 par Jim
+// Ecrit le 31/3/2016 par Jim
 
 // Ce service web permet à un utilisateur de consulter ses réservations à venir
 // et fournit un flux XML contenant un compte-rendu d'exécution
@@ -117,17 +117,17 @@ function TraitementNormal()
 		$elt_donnees->appendChild($elt_reservation);
 
 		// crée les éléments enfants de l'élément 'reservation'
-		$elt_id         = $doc->createElement('id', utf8_encode($uneReservation->getId()));
+		$elt_id         = $doc->createElement('id', $uneReservation->getId());
 		$elt_reservation->appendChild($elt_id);
-		$elt_timestamp  = $doc->createElement('timestamp', utf8_encode($uneReservation->getTimestamp()));
+		$elt_timestamp  = $doc->createElement('timestamp', $uneReservation->getTimestamp());
 		$elt_reservation->appendChild($elt_timestamp);
-		$elt_start_time = $doc->createElement('start_time', utf8_encode(date('Y-m-d H:i:s', $uneReservation->getStart_time())));
+		$elt_start_time = $doc->createElement('start_time', date('Y-m-d H:i:s', $uneReservation->getStart_time()));
 		$elt_reservation->appendChild($elt_start_time);
-		$elt_end_time   = $doc->createElement('end_time', utf8_encode(date('Y-m-d H:i:s', $uneReservation->getEnd_time())));
+		$elt_end_time   = $doc->createElement('end_time', date('Y-m-d H:i:s', $uneReservation->getEnd_time()));
 		$elt_reservation->appendChild($elt_end_time);
-		$elt_room_name  = $doc->createElement('room_name', utf8_encode($uneReservation->getRoom_name()));
+		$elt_room_name  = $doc->createElement('room_name', $uneReservation->getRoom_name());
 		$elt_reservation->appendChild($elt_room_name);
-		$elt_status     = $doc->createElement('status', utf8_encode($uneReservation->getStatus()));
+		$elt_status     = $doc->createElement('status', $uneReservation->getStatus());
 		$elt_reservation->appendChild($elt_status);
 		
 		// le digicode n'est renseigné que pour les réservations confirmées

@@ -1,6 +1,6 @@
 <?php
 // Service web du projet Réservations M2L
-// Ecrit le 21/5/2015 par Jim
+// Ecrit le 31/3/2016 par Jim
 
 // Ce service web permet à un utilisateur de consulter la liste des salles proposées à la réservation
 // et fournit un flux XML contenant un compte-rendu d'exécution
@@ -113,13 +113,13 @@ function TraitementNormal()
 		// crée les éléments enfants de l'élément 'reservation'
 		$elt_id         = $doc->createElement('id', utf8_encode($uneSalle->getId()));
 		$elt_salle->appendChild($elt_id);
-		$elt_room_name  = $doc->createElement('room_name', utf8_encode($uneSalle->getRoom_name()));
+		$elt_room_name  = $doc->createElement('room_name', $uneSalle->getRoom_name());
 		$elt_salle->appendChild($elt_room_name);
-		$elt_capacity  = $doc->createElement('capacity', utf8_encode($uneSalle->getCapacity()));
+		$elt_capacity  = $doc->createElement('capacity', $uneSalle->getCapacity());
 		$elt_salle->appendChild($elt_capacity);
-		$elt_area_name = $doc->createElement('area_name', utf8_encode($uneSalle->getAeraName()));
+		$elt_area_name = $doc->createElement('area_name', $uneSalle->getAeraName());
 		$elt_salle->appendChild($elt_area_name);
-		$elt_area_admin_email   = $doc->createElement('area_admin_email', utf8_encode($uneSalle->getAeraAdminEmail()));
+		$elt_area_admin_email   = $doc->createElement('area_admin_email', $uneSalle->getAeraAdminEmail());
 		$elt_salle->appendChild($elt_area_admin_email);
 	}
 	return;
