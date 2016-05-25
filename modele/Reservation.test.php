@@ -1,3 +1,13 @@
+<?php
+// Projet Réservations M2L - version web mobile
+// fichier : modele/Reservation.test.php
+// Test de la classe Reservation.class.php
+// Création : 30/9/2015 par JM CARTRON
+// Mise à jour : 24/5/2016 par JM CARTRON
+
+// inclusion de la classe Reservation
+include_once ('Reservation.class.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,19 +18,11 @@
 <body>
 
 <?php
-// Domaine : Services web de l'application de suivi des réservations de la Maison des Ligues de Lorraine
-// Test de la classe Reservation
-// Auteur : JM CARTRON
-// Dernière mise à jour : 30/9/2015
-
-// inclusion de la classe Reservation ("include_once" peut être remplacé par "require_once")
-include_once ('Reservation.class.php');
-
 $unTimeStamp = date('Y-m-d H:i:s', time());		// l'heure courante
 $unStartTime = time() + 3600;					// l'heure courante + 1 h
 $unEndTime = time() + 7200;						// l'heure courante + 2 h
 
-// appel du constructeur et tests des accesseurs
+// appel du constructeur et tests des accesseurs (get)
 $uneReservation = new Reservation(10, $unTimeStamp, $unStartTime, $unEndTime, "Salle informatique", 4, "123456");
 
 echo ('$id : ' . $uneReservation->getId() . '<br>');
@@ -32,7 +34,7 @@ echo ('$status : ' . $uneReservation->getStatus() . '<br>');
 echo ('$digicode : ' . $uneReservation->getDigicode() . '<br>');
 echo ('<br>');
 
-// tests des mutateurs
+// tests des mutateurs (set)
 $uneReservation->setId(20);
 $uneReservation->setTimestamp(date('Y-m-d H:i:s', time() - 3600));	// l'heure courante - 1 h
 $uneReservation->setStart_time(time());								// l'heure courante

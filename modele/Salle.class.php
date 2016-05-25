@@ -1,8 +1,9 @@
 <?php
-// Domaine : Services web de l'application de suivi des réservations de la Maison des Ligues de Lorraine
-// Classe : Salle
-// Auteur : JM CARTRON
-// Dernière mise à jour : 7/5/2015
+// Projet Réservations M2L - version web mobile
+// fichier : modele/Salle.class.php
+// Rôle : la classe Salle représente les salles pouvant faire l'objet d'une réservation
+// Création : 5/11/2015 par JM CARTRON
+// Mise à jour : 24/5/2016 par JM CARTRON
 
 class Salle
 {
@@ -10,7 +11,7 @@ class Salle
 	// ---------------------------------- Membres privés de la classe ---------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 	
-	private $id;				// identifiant de la salle
+	private $id;				// identifiant de la salle (numéro automatique dans la BDD)
 	private $room_name;			// nom de la salle
 	private $capacity;			// capacité de la salle
 	private $area_name;			// nom du domaine de la salle
@@ -20,7 +21,7 @@ class Salle
 	// ----------------------------------------- Constructeur -----------------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 	
-	public function __construct($unId, $unRoomName, $unCapacity, $unAreaName, $unAeraAdminEmail) {
+	public function Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAeraAdminEmail) {
 		$this->id = $unId;
 		$this->room_name = $unRoomName;
 		$this->capacity = $unCapacity;
@@ -41,11 +42,25 @@ class Salle
 	public function getCapacity()	{return $this->capacity;}
 	public function setCapacity($unCapacity) {$this->capacity = $unCapacity;}
 		
-	public function getAeraName()	{return $this->area_name;}
-	public function setAeraName($unAreaName) {$this->area_name = $unAreaName;}
+	public function getAreaName()	{return $this->area_name;}
+	public function setAreaName($unAreaName) {$this->area_name = $unAreaName;}
 
-	public function getAeraAdminEmail()	{return $this->area_admin_email;}
-	public function setAeraAdminEmail($unAeraAdminEmail) {$this->area_admin_email = $unAeraAdminEmail;}
+	public function getAreaAdminEmail()	{return $this->area_admin_email;}
+	public function setAreaAdminEmail($unAreaAdminEmail) {$this->area_admin_email = $unAreaAdminEmail;}
+
+	// ------------------------------------------------------------------------------------------------------
+	// ---------------------------------------- Méthodes d'instances ----------------------------------------
+	// ------------------------------------------------------------------------------------------------------
+	
+	public function toString() {
+		$msg = "Salle : <br>";
+		$msg .= "id : " . $this->id . "<br>";
+		$msg .= "room_name : " . $this->room_name . "<br>";
+		$msg .= "capacity : " . $this->capacity . "<br>";
+		$msg .= "area_name : " . $this->area_name . "<br>";
+		$msg .= "area_admin_email : " . $this->area_admin_email . "<br>";
+		return $msg;
+	}
 	
 } // fin de la classe Salle
 

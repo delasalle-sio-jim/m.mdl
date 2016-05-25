@@ -1,8 +1,9 @@
 <?php
-// Domaine : Services web de l'application de suivi des réservations de la Maison des Ligues de Lorraine
-// Classe : Reservation
-// Auteur : JM CARTRON
-// Dernière mise à jour : 30/9/2015
+// Projet Réservations M2L - version web mobile
+// fichier : modele/Reservation.class.php
+// Rôle : la classe Reservation représente les réservations de salles
+// Création : 5/11/2015 par JM CARTRON
+// Mise à jour : 24/5/2016 par JM CARTRON
 
 class Reservation
 {
@@ -12,7 +13,7 @@ class Reservation
 	
 	// Rappel : le temps UNIX mesure le nombre de secondes écoulées depuis le 1/1/1970
 	// les types des champs timestamp, start_time et end_time découlent des types choisis pour la BDD
-	private $id;			// identifiant de la réservation
+	private $id;			// identifiant de la réservation (numéro automatique dans la BDD)
 	private $timestamp;		// date et heure de la dernière mise à jour de la réservation (format 'Y-m-d H:i:s')
 	private $start_time;	// date de début de la réservation (en temps UNIX)
 	private $end_time;		// date de fin de la réservation (en temps UNIX)
@@ -24,7 +25,7 @@ class Reservation
 	// ----------------------------------------- Constructeur -----------------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 	
-	public function __construct($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode) {
+	public function Reservation($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode) {
 		$this->id = $unId;
 		$this->timestamp = $unTimeStamp;
 		$this->start_time = $unStartTime;
@@ -58,6 +59,10 @@ class Reservation
 	
 	public function getDigicode()	{return $this->digicode;}
 	public function setDigicode($unDigicode) {$this->digicode = $unDigicode;}
+
+	// ------------------------------------------------------------------------------------------------------
+	// ---------------------------------------- Méthodes d'instances ----------------------------------------
+	// ------------------------------------------------------------------------------------------------------
 	
 	public function toString() {
 		$msg = "Réservation : <br>";

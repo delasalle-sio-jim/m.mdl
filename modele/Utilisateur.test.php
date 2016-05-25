@@ -1,3 +1,15 @@
+<?php
+// Projet Réservations M2L - version web mobile
+// fichier : modele/Utilisateur.test.php
+// Test de la classe Utilisateur.class.php
+// Création : 30/9/2015 par JM CARTRON
+// Mise à jour : 24/5/2016 par JM CARTRON
+
+// inclusion de la classe Utilisateur ("include_once" peut être remplacé par "require_once")
+include_once ('Utilisateur.class.php');
+// inclusion de la classe Reservation ("include_once" peut être remplacé par "require_once")
+include_once ('Reservation.class.php');
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +20,7 @@
 <body>
 
 <?php
-// Domaine : Services web de l'application de suivi des réservations de la Maison des Ligues de Lorraine
-// Test de la classe Utilisateur
-// Auteur : JM CARTRON
-// Dernière mise à jour : 30/9/2015
-
-// inclusion de la classe Utilisateur ("include_once" peut être remplacé par "require_once")
-include_once ('Utilisateur.class.php');
-// inclusion de la classe Reservation ("include_once" peut être remplacé par "require_once")
-include_once ('Reservation.class.php');
-
-// tests du constructeur et des accesseurs
+// tests du constructeur et des accesseurs (get)
 $unUtilisateur = new Utilisateur(10, 1, "Tess Tuniter", "123456", "tess.tuniter@gmail.com");
 
 echo ('$id : ' . $unUtilisateur->getId() . '<br>');
@@ -29,7 +31,7 @@ echo ('$email : ' . $unUtilisateur->getEmail() . '<br>');
 echo ('nombre de réservations : ' . $unUtilisateur->getNbReservations() . '<br>');
 echo ('<br>');
 
-// tests des mutateurs
+// tests des mutateurs (set)
 $unUtilisateur->setId(20);
 $unUtilisateur->setLevel(2);
 $unUtilisateur->setName("Amédée Bogueur");

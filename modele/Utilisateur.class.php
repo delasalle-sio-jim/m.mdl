@@ -1,8 +1,9 @@
 <?php
-// Domaine : Services web de l'application de suivi des réservations de la Maison des Ligues de Lorraine
-// Classe : Utilisateur
-// Auteur : JM CARTRON
-// Dernière mise à jour : 30/9/2015
+// Projet Réservations M2L - version web mobile
+// fichier : modele/Utilisateur.class.php
+// Rôle : la classe Utilisateur représente les utilisateurs de l'application
+// Création : 5/11/2015 par JM CARTRON
+// Mise à jour : 24/5/2016 par JM CARTRON
 
 class Utilisateur
 {
@@ -10,18 +11,18 @@ class Utilisateur
 	// ---------------------------------- Membres privés de la classe ---------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 	
-	private $id;				// identifiant de l'utilisateur
+	private $id;				// identifiant de l'utilisateur (numéro automatique dans la BDD)
 	private $level;				// 0=simple visiteur  1=utilisateur pouvant réserver  2=administrateur
 	private $name;				// nom de l'utilisateur
 	private $password;			// mot de passe de l'utilisateur
 	private $email;				// adresse mail de l'utilisateur
-	private $lesReservations;	// les réservations passées par l'utilisateur
+	private $lesReservations;	// la collection des réservations passées par l'utilisateur
 	
 	// ------------------------------------------------------------------------------------------------------
 	// ----------------------------------------- Constructeur -----------------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 	
-	public function __construct($unId, $unLevel, $unName, $unPassword, $unEmail) {
+	public function Utilisateur($unId, $unLevel, $unName, $unPassword, $unEmail) {
 		$this->id = $unId;
 		$this->level = $unLevel;
 		$this->name = $unName;
