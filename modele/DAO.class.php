@@ -193,7 +193,7 @@ class DAO
 	// modifié par Jim le 30/9/2015
 	public function getLesReservations($nomUser)
 	{	// préparation de la requete de recherche
-		$txt_req = "Select mrbs_entry.id, timestamp, start_time, end_time, room_name, status, digicode";
+		$txt_req = "Select mrbs_entry.id as id_entry, timestamp, start_time, end_time, room_name, status, digicode";
 		$txt_req = $txt_req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
 		$txt_req = $txt_req . " where mrbs_entry.room_id = mrbs_room.id";
 		$txt_req = $txt_req . " and mrbs_entry.id = mrbs_entry_digicode.id";
@@ -214,7 +214,7 @@ class DAO
 		// tant qu'une ligne est trouvée :
 		while ($uneLigne)
 		{	// création d'un objet Reservation
-			$unId = utf8_encode($uneLigne->id);
+			$unId = utf8_encode($uneLigne->id_entry);
 			$unTimeStamp = utf8_encode($uneLigne->timestamp);
 			$unStartTime = utf8_encode($uneLigne->start_time);
 			$unEndTime = utf8_encode($uneLigne->end_time);

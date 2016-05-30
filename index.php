@@ -1,8 +1,9 @@
 <?php
 // Projet Réservations M2L - version web mobile
-// Ecrit le 12/10/2015 par Jim
-
-// Fonction de la page principale index.php : analyser toutes les demandes et activer le contrôleur chargé de traiter l'action demandée
+// fichier : index.php
+// Rôle : analyser toutes les demandes (appels de page ou traitements de formulaires) et activer le contrôleur chargé de traiter l'action demandée
+// Création : 5/11/2015 par JM CARTRON
+// Mise à jour : 30/5/2016 par JM CARTRON
 
 // Ce fichier est appelé par tous les liens internes, et par la validation de tous les formulaires
 // il est appelé avec un paramètre action qui peut prendre les valeurs suivantes :
@@ -25,24 +26,32 @@ session_start();		// permet d'utiliser des variables de session
 $debug = false;
 
 // choix des styles graphiques
-$version = "1.3.2";			// choix de la version de JQuery Mobile (voir fichier head.php) : 1.2.0,  1.2.1,  1.3.2,  1.4.5
-$themeNormal = "b";			// thème de base
-$themeProbleme = "a";		// thème utilisé pour afficher un message en cas de problème
+$version = "1.4.5";			// choix de la version de JQuery Mobile (voir fichier head.php) : 1.2.0,  1.2.1,  1.3.2,  1.4.5
+$themeNormal = "a";			// thème de base
+$themeProbleme = "b";		// thème utilisé pour afficher un message en cas de problème
+$transition ="flip";		// transition lors des changements de page (pop, flip, fade, turn, flow, slidefade, slide, slideup, slidedown)
 
 // on vérifie le paramètre action de l'URL
 if ( ! isset ($_GET['action']) == true)  $action = '';  else   $action = $_GET['action'];
 
 // lors d'une première connexion, ou après une déconnexion, on initialise à vide les variables de session
 if ($action == '' || $action == 'Deconnecter')
-{	$_SESSION['nom'] = '';
-	$_SESSION['mdp'] = '';
-	$_SESSION['niveauUtilisateur'] = '';
+{	//$_SESSION['nom'] = '';
+	//$_SESSION['mdp'] = '';
+	//$_SESSION['niveauUtilisateur'] = '';
+	unset ($_SESSION['nom']);
+	unset ($_SESSION['mdp']);
+	unset ($_SESSION['niveauUtilisateur']);
+	unset ($_SESSION['afficherMdp']);
 }
 
 // tests des variables de session
 if ( ! isset ($_SESSION['nom']) == true)  $nom = '';  else  $nom = $_SESSION['nom'];
 if ( ! isset ($_SESSION['mdp']) == true)  $mdp = '';  else  $mdp = $_SESSION['mdp'];
 if ( ! isset ($_SESSION['niveauUtilisateur']) == true)  $niveauUtilisateur = '';  else  $niveauUtilisateur = $_SESSION['niveauUtilisateur'];
+
+// pour mémoriser le choix d'afficher en clair (ou pas) le mot de passe :
+if ( isset ($_SESSION['afficherMdp']) == false)  $afficherMdp = 'off';  else  $afficherMdp = $_SESSION['afficherMdp'];
 
 // si l'utilisateur n'est pas encore identifié, il sera automatiquement redirigé vers le contrôleur d'authentification
 // (sauf s'il ne peut pas se connecter et demande de se faire envoyer son mot de passe qu'il a oublié)
