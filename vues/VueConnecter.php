@@ -2,6 +2,7 @@
 	// Projet Réservations M2L - version web mobile
 	// fichier : vues/VueConnecter.php
 	// Rôle : visualiser la vue de connexion d'un utilisateur
+	// cette vue est appelée par le contôleur controleurs/CtrlConnecter.php
 	// Création : 12/10/2015 par JM CARTRON
 	// Mise à jour : 30/5/2016 par JM CARTRON
 	
@@ -38,7 +39,8 @@
 				document.getElementById("txtMotDePasse").innerText="<?php echo $mdp; ?>"
 			}
 		</script>
-	</head> 
+	</head>
+	
 	<body onload="initialisation();">
 		<div data-role="page">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
@@ -49,18 +51,18 @@
 				<div data-role="collapsible-set">
 					<div data-role="collapsible">
 						<h3>Bienvenue sur M2L Réservations...</h3>
-						<p>L'application de suivi des réservations de la <b>Maison des Ligues de Lorraine (M2L)</b> me propose les services suivants :</p>
+						<p>L'application de suivi des réservations de la <b>Maison des Ligues de Lorraine (M2L)</b> vous propose les services suivants :</p>
 						<ul>
-							<li>Consulter mes réservations</li>
+							<li>Consulter vos réservations</li>
 							<li>Confirmer une réservation</li>
 							<li>Annuler une réservation</li>
-							<li>Modifier mon mot de passe</li>
+							<li>Modifier votre mot de passe</li>
 						</ul>
 					</div>
 			
 					<div data-role="collapsible" <?php if($divConnecterDepliee == true) echo ('data-collapsed="false"'); ?>>
 						<h3>Accéder à mon compte</h3>
-						<form name="form1" id="form1" action="index.php?action=Connecter" data-ajax="false" method="post" data-transition="<?php echo $transition; ?>">
+						<form name="form1" id="form1" action="index.php?action=Connecter" method="post" data-transition="<?php echo $transition; ?>">
 							<div data-role="fieldcontain" class="ui-hide-label">
 								<label for="txtNom">Utilisateur :</label>
 								<input type="text" name="txtNom" id="txtNom" data-mini="true" placeholder="Mon nom" required value="<?php echo $nom; ?>" >
@@ -83,22 +85,27 @@
 						
 					<div data-role="collapsible" <?php if($divDemanderMdpDepliee == true) echo ('data-collapsed="false"'); ?>>
 						<h3>J'ai oublié mon mot de passe</h3>
-						<p>Cette option permet de regénérer un nouveau mot de passe qui vous sera immédiatement envoyé par mail. Nous vous conseillons de le changer aussitôt.</p>
+						<p>Cette option permet de regénérer un nouveau mot de passe qui vous sera immédiatement envoyé par mail.</p>
+						<p>Il est conseillé de le changer aussitôt.</p>
 						<p style="margin-top: 0px; margin-bottom: 0px;">
-							<a href="index.php?action=DemanderMdp" data-role="button" data-mini="true" data-ajax="false">Obtenir un nouveau mot de passe</a>
+							<a href="index.php?action=DemanderMdp" data-role="button" data-mini="true" data-transition="<?php echo $transition; ?>">Obtenir un nouveau mot de passe</a>
 						</p>
 					</div>
 
-					<?php if ($OS == "Android") { ?>
+					
 					<div data-role="collapsible">
 						<h3>Télécharger l'application Android</h3>
-						<p>Vous disposez d'un appareil fonctionnant sous Android.</p>
-						<p>Vous pouvez télécharger la version Android de cette application.</p>
-						<p style="margin-top: 0px; margin-bottom: 0px;">
-							<a href="./controleurs/CtrlTelechargerApk.php" data-role="button" data-mini="true" data-ajax="false">Télécharger l'application Android</a>
-						</p>
+						<?php if ($OS == "Android") { ?>
+							<p>Vous disposez d'un appareil fonctionnant sous Android.</p>
+							<p>Vous pouvez télécharger la version Android de cette application.</p>
+							<p style="margin-top: 0px; margin-bottom: 0px;">
+								<a href="./controleurs/CtrlTelechargerApk.php" data-role="button" data-mini="true" data-transition="<?php echo $transition; ?>">Télécharger l'application Android</a>
+							</p>
+						<?php } else {;?>
+							<p>Vous ne disposez pas d'un appareil fonctionnant sous Android.</p>
+							<p>Vous ne pouvez pas télécharger la version Android de cette application.</p>
+						<?php };?>
 					</div>
-					<?php };?>
 				
 				</div>	
 				
