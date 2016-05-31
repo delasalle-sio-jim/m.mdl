@@ -10,7 +10,18 @@
 <html>
 	<head>
 		<?php include_once ('vues/head.php'); ?>
-	</head> 
+		
+		<script>
+			<?php if ($typeMessage != '') { ?>
+				// associe une fonction à l'événement pageinit
+				$(document).bind('pageinit', function() {
+					// affiche la boîte de dialogue 'affichage_message'
+					$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
+				} );
+			<?php } ?>
+		</script>
+	</head>
+	
 	<body>
 		<div data-role="page">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
@@ -19,7 +30,7 @@
 			</div>
 			<div data-role="content">
 				<h4 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Demander un nouveau mot de passe</h4>
-				<form name="form1" id="form1" action="index.php?action=DemanderMdp" method="post">
+				<form name="form1" id="form1" action="index.php?action=DemanderMdp" data-ajax="false" method="post" data-transition="<?php echo $transition; ?>">
 					<div data-role="fieldcontain" class="ui-hide-label">
 						<label for="nom">Utilisateur :</label>
 						<input type="text" name="nom" id="nom" placeholder="Entrez votre nom" value="<?php echo $nom; ?>" >
@@ -37,7 +48,7 @@
 					echo "<p>SESSION['niveauUtilisateur'] = " . $_SESSION['niveauUtilisateur'] . "</p>";
 				} ?>
 			</div>
-			<div data-role="footer" data-position="fixed" data-theme="<?php echo $themeFooter; ?>">
+			<div data-role="footer" data-position="fixed" data-theme="<?php echo $themeNormal; ?>">
 				<h4>Suivi des réservations de salles<br>Maison des ligues de Lorraine (M2L)</h4>
 			</div>
 		</div>

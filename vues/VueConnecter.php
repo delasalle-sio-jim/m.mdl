@@ -62,7 +62,7 @@
 			
 					<div data-role="collapsible" <?php if($divConnecterDepliee == true) echo ('data-collapsed="false"'); ?>>
 						<h3>Accéder à mon compte</h3>
-						<form name="form1" id="form1" action="index.php?action=Connecter" method="post" data-transition="<?php echo $transition; ?>">
+						<form name="form1" id="form1" action="index.php?action=Connecter" data-ajax="false" method="post" data-transition="<?php echo $transition; ?>">
 							<div data-role="fieldcontain" class="ui-hide-label">
 								<label for="txtNom">Utilisateur :</label>
 								<input type="text" name="txtNom" id="txtNom" data-mini="true" placeholder="Mon nom" required value="<?php echo $nom; ?>" >

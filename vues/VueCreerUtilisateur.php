@@ -12,7 +12,7 @@
 		<div data-role="page">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
 				<h4>M2L-GRR</h4>
-				<a href="index.php?action=Menu">Retour menu</a>
+				<a href="index.php?action=Menu" data-transition="<?php echo $transition; ?>">Retour menu</a>
 			</div>
 			<div data-role="content">
 				<h4 style="text-align: center; margin-top: 0px; margin-bottom: 0px;">Créer un compte utilisateur</h4>
@@ -50,7 +50,7 @@
 				
 			</div>
 			<div data-role="footer" data-position="fixed" data-theme="<?php echo $themeFooter; ?>">
-				<h4><?php echo $msgFooter; ?></h4>
+				<h4>Suivi des réservations de salles<br>Maison des ligues de Lorraine (M2L)</h4>
 			</div>
 		</div>
 	</body>

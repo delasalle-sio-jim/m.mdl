@@ -1,8 +1,10 @@
 <?php
 // Projet Réservations M2L - version web mobile
-// Fonction du contrôleur CtrlConsulterReservations.php : traiter la demande de consultation des réservations d'un utilisateur
-// Ecrit le 12/10/2015 par Jim
-// Modifié le 29/5/2016 par Jim
+// fichier : controleurs/VueConsulterReservations.php
+// Rôle : traiter la demande de consultation des réservations d'un utilisateur
+// cette vue est appelée par le contôleur controleurs/CtrlConsulterReservations.php
+// Création : 12/10/2015 par JM CARTRON
+// Mise à jour : 31/5/2016 par JM CARTRON
 
 // on vérifie si le demandeur de cette action est bien authentifié
 if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
@@ -26,12 +28,10 @@ else {
 
 	// préparation d'un message dans le pied de page (footer)
 	if ($nbReponses == 0) {
-		$msgFooter = "Vous n'avez aucune réservation !";
-		$themeFooter = $themeProbleme;
+		$message = "Vous n'avez aucune réservation !";
 	}
 	else {
-		$msgFooter = "Vous avez " . $nbReponses . " réservation(s) !";
-		$themeFooter = $themeNormal;
+		$message = "Vous avez " . $nbReponses . " réservation(s) !";
 	}
 	
 	// affichage de la vue
