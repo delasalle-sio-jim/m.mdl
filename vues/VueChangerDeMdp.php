@@ -7,10 +7,12 @@
 	// Mise à jour : 1/6/2016 par JM CARTRON
 	
 	// pour obliger la page à se recharger
+	/*
 	header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: no-cache');
 	header('Content-Tranfer-Encoding: none');
 	header('Expires: 0');
+	*/
 ?>
 <!doctype html>
 <html>
@@ -18,13 +20,17 @@
 		<?php include_once ('vues/head.php'); ?>
 		
 		<script>
-			<?php if ($typeMessage != '') { ?>
 				// associe une fonction à l'événement pageinit
 				$(document).bind('pageinit', function() {
-					// affiche la boîte de dialogue 'affichage_message'
-					$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
+					// l'événement "click" de la case à cocher "caseAfficherMdp" est associé à la fonction "afficherMdp"
+					$('#caseAfficherMdp').click( afficherMdp );
+				
+					<?php if ($typeMessage != '') { ?>
+						// affiche la boîte de dialogue 'affichage_message'
+						$.mobile.changePage('#affichage_message', {transition: "<?php echo $transition; ?>"});
+					<?php } ?>
 				} );
-			<?php } ?>
+			
 			
 			// associe une fonction à l'événement click sur la case à cocher 'caseAfficherMdp'
 			$('#caseAfficherMdp').live('click', function() {
@@ -43,7 +49,25 @@
 					//window.alert('false');
 				};
 			} );
-						
+
+			// selon l'état de la case, le type des zones de saisie est "text" ou "password"
+			// Fonction jQuery
+			function afficherMdp() {
+				// tester si la case est cochée
+				if ( $("#caseAfficherMdp").is(":checked") ) {
+					// les 2 zones passent en <input type="text">
+					$('#txtNouveauMdp').attr('type', 'text');
+					$('#txtConfirmationMdp').attr('type', 'text');
+				}
+				else {
+					// les 2 zones passent en <input type="password">
+					$('#txtNouveauMdp').attr('type', 'password');
+					$('#txtConfirmationMdp').attr('type', 'password');
+				};
+			}
+
+			// selon l'état de la case, le type des zones de saisie est "text" ou "password"
+			// fonction JavaScript	
 			function afficherMdp2()
 			{	if (document.getElementById("caseAfficherMdp").checked == true)
 				{	document.getElementById("txtNouveauMdp").type="text";
@@ -59,7 +83,7 @@
 		</script>
 	</head> 
 	<body>
-		<div data-role="page">
+		<div data-role="page" id="page_principale">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
 				<h4>M2L-GRR</h4>
 				<a href="index.php?action=Menu" data-transition="<?php echo $transition; ?>">Retour menu</a>
@@ -77,7 +101,7 @@
 					</div>
 					<div data-role="fieldcontain" data-type="horizontal" class="ui-hide-label">
 						<label for="caseAfficherMdp">Afficher le mot de passe en clair</label>
-						<input type="checkbox" name="caseAfficherMdp" id="caseAfficherMdp" onclick="afficherMdp2();" data-mini="true" <?php if ($afficherMdp == 'on') echo 'checked'; ?>>
+						<input type="checkbox" name="caseAfficherMdp" id="caseAfficherMdp" data-mini="true" <?php if ($afficherMdp == 'on') echo 'checked'; ?>>
 					</div>
 					<div data-role="fieldcontain">
 						<input type="submit" name="btnChangerDeMdp" id="btnChangerDeMdp" value="Envoyer les données" data-mini="true">
@@ -99,7 +123,33 @@
 			</div>
 		</div>
 		
-		<?php include_once ('vues/dialog_message.php'); ?>
+		<?php // include_once ('vues/dialog_message.php'); ?>
+		
+		<div data-role="dialog" id="affichage_message" data-close-btn="none">
+			<div data-role="header" data-theme="<?php echo $themeFooter; ?>">
+				<?php if ($typeMessage == 'avertissement') { ?>
+					<h3>Avertissement...</h3>
+				<?php } ?>
+				<?php if ($typeMessage == 'information') { ?>
+					<h3>Information...</h3>
+				<?php } ?>
+			</div>
+			<div data-role="content">
+				<p style="text-align: center;">
+				<?php if ($typeMessage == 'avertissement') { ?>
+					<img src="images/avertissement.png" class="image" />
+				<?php } ?>
+				
+				<?php if ($typeMessage == 'information') { ?>
+					<img src="images/information.png" class="image" />
+				<?php } ?>
+				</p>
+				<p style="text-align: center;"><?php echo $message; ?></p>
+			</div>
+			<div data-role="footer" class="ui-bar" data-theme="<?php echo $themeFooter; ?>">
+				<a href="#page_principale" data-transition="<?php echo $transition; ?>">Fermer</a>
+			</div>
+		</div>
 		
 	</body>
 </html>
