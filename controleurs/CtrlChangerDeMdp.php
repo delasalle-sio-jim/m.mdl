@@ -1,7 +1,9 @@
 <?php
 // Projet Réservations M2L - version web mobile
-// Fonction du contrôleur CtrlChangerDeMdp.php : traiter la demande de changement de mot de passe
-// Ecrit le 12/10/2015 par Jim
+// fichier : controleurs/CtrlChangerDeMdp.php
+// Rôle : traiter la demande de changement de mot de passe
+// Création : 12/10/2015 par JM CARTRON
+// Mise à jour : 30/5/2016 par JM CARTRON
 
 // on vérifie si le demandeur de cette action est bien authentifié
 if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
@@ -10,29 +12,34 @@ if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisa
 	header ("Location: index.php?action=Deconnecter");
 }
 else {
-	if ( ! isset ($_POST ["nouveauMdp"]) && ! isset ($_POST ["confirmationMdp"]) ) {
+	if ( ! isset ($_POST ["txtNouveauMdp"]) && ! isset ($_POST ["txtConfirmationMdp"]) ) {
 		// si les données n'ont pas été postées, c'est le premier appel du formulaire : affichage de la vue sans message d'erreur
 		$nouveauMdp = '';
 		$confirmationMdp = '';
-		$msgFooter = 'Changer mon mot de passe';
+		$afficherMdp = 'off';
+		$message = '';
+		$typeMessage = '';			// 2 valeurs possibles : 'information' ou 'avertissement'
 		$themeFooter = $themeNormal;
 		include_once ('vues/VueChangerDeMdp.php');
 	}
 	else {
 		// récupération des données postées
-		if ( empty ($_POST ["nouveauMdp"]) == true)  $nouveauMdp = "";  else   $nouveauMdp = $_POST ["nouveauMdp"];
-		if ( empty ($_POST ["confirmationMdp"]) == true)  $confirmationMdp = "";  else   $confirmationMdp = $_POST ["confirmationMdp"];
-				
+		if ( empty ($_POST ["txtNouveauMdp"]) == true)  $nouveauMdp = "";  else   $nouveauMdp = $_POST ["txtNouveauMdp"];
+		if ( empty ($_POST ["txtConfirmationMdp"]) == true)  $confirmationMdp = "";  else   $confirmationMdp = $_POST ["txtConfirmationMdp"];
+		if ( empty ($_POST ["caseAfficherMdp"]) == true)  $afficherMdp = 'off';  else   $afficherMdp = $_POST ["caseAfficherMdp"];
+			
 		if ( $nouveauMdp == "" || $confirmationMdp == "" ) {
 			// si les données sont incomplètes, réaffichage de la vue avec un message explicatif
-			$msgFooter = 'Données incomplètes !';
+			$message = 'Données incomplètes !';
+			$typeMessage = 'avertissement';
 			$themeFooter = $themeProbleme;
 			include_once ('vues/VueChangerDeMdp.php');
 		}
 		else {
 			if ( $nouveauMdp != $confirmationMdp ) {
 				// si les données sont incorrectes, réaffichage de la vue avec un message explicatif
-				$msgFooter = 'Le nouveau mot de passe et<br>sa confirmation sont différents !';
+				$message = 'Le nouveau mot de passe et<br>sa confirmation sont différents !';
+				$typeMessage = 'avertissement';
 				$themeFooter = $themeProbleme;
 				include_once ('vues/VueChangerDeMdp.php');
 			}
@@ -48,11 +55,13 @@ else {
 				$ok = $dao->envoyerMdp ($nom, $nouveauMdp);
 							
 				if ( $ok ) {
-					$msgFooter = "Enregistrement effectué.<br>Vous allez recevoir un mail de confirmation.";
+					$message = "Enregistrement effectué.<br>Vous allez recevoir un mail de confirmation.";
+					$typeMessage = 'information';
 					$themeFooter = $themeNormal;
 				}
 				else {
-					$msgFooter = "Enregistrement effectué.<br>L'envoi du mail de confirmation a rencontré un problème.";
+					$message = "Enregistrement effectué.<br>L'envoi du mail de confirmation a rencontré un problème.";
+					$typeMessage = 'avertissement';
 					$themeFooter = $themeProbleme;
 				}
 				unset($dao);		// fermeture de la connexion à MySQL
