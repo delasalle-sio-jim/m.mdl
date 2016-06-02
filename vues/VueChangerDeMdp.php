@@ -93,11 +93,13 @@
 				<form action="index.php?action=ChangerDeMdp" method="post" data-ajax="false">
 					<div data-role="fieldcontain">
 						<label for="txtNouveauMdp">Nouveau mot de passe :</label>
-						<input type="<?php if ($afficherMdp == 'off') echo 'password'; else echo 'text'; ?>" name="txtNouveauMdp" id="txtNouveauMdp" placeholder="Mon nouveau mot de passe" required value="<?php echo $nouveauMdp; ?>">
+						<input type="<?php if ($afficherMdp == 'off') echo 'password'; else echo 'text'; ?>" name="txtNouveauMdp" id="txtNouveauMdp" 
+							placeholder="Mon nouveau mot de passe" required value="<?php echo $nouveauMdp; ?>">
 					</div>
 					<div data-role="fieldcontain">
 						<label for="txtConfirmationMdp">Confirmation nouveau mot de passe :</label>
-						<input type="<?php if ($afficherMdp == 'off') echo 'password'; else echo 'text'; ?>" name="txtConfirmationMdp" id="txtConfirmationMdp" placeholder="Confirmation de mon nouveau mot de passe" required value="<?php echo $confirmationMdp; ?>">
+						<input type="<?php if ($afficherMdp == 'off') echo 'password'; else echo 'text'; ?>" name="txtConfirmationMdp" id="txtConfirmationMdp" 
+							placeholder="Confirmation de mon nouveau mot de passe" required value="<?php echo $confirmationMdp; ?>">
 					</div>
 					<div data-role="fieldcontain" data-type="horizontal" class="ui-hide-label">
 						<label for="caseAfficherMdp">Afficher le mot de passe en clair</label>

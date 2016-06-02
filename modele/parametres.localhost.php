@@ -20,7 +20,7 @@ global $DELAI_DIGICODE, $ADR_MAIL_EMETTEUR;
 $DELAI_DIGICODE = 3600;			// 3600 sec ou 1 h
 
 // adresse de l'émetteur lors d'un envoi de courriel
-$ADR_MAIL_EMETTEUR = "delasalle.sio.crib@gmail.com";
+$ADR_MAIL_EMETTEUR = "delasalle.sio.eleves@gmail.com";
 
 // ATTENTION : on ne met pas de balise de fin de script pour ne pas prendre le risque
 // d'enregistrer d'espaces après la balise de fin de script !!!!!!!!!!!!

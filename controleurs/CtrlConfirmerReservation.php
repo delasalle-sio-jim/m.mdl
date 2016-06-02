@@ -1,7 +1,9 @@
 <?php
 // Projet Réservations M2L - version web mobile
-// Fonction du contrôleur CtrlConfirmerReservation.php : traiter la demande de confirmation d'une réservation provisoire
-// Ecrit le 12/10/2015 par Jim
+// fichier : controleurs/CtrlConfirmerReservation.php
+// Rôle : traiter la demande de confirmation d'une réservation provisoire
+// Création : 12/10/2015 par JM CARTRON
+// Mise à jour : 2/6/2016 par JM CARTRON
 
 // on vérifie si le demandeur de cette action est bien authentifié
 if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
@@ -10,20 +12,22 @@ if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisa
 	header ("Location: index.php?action=Deconnecter");
 }
 else {
-	if ( ! isset ($_POST ["numReservation"]) ) {
+	if ( ! isset ($_POST ["txtNumReservation"]) ) {
 		// si les données n'ont pas été postées, c'est le premier appel du formulaire : affichage de la vue sans message d'erreur
 		$numReservation = '';
-		$msgFooter = 'Confirmer une réservation';
+		$message = '';
+		$typeMessage = '';			// 2 valeurs possibles : 'information' ou 'avertissement'
 		$themeFooter = $themeNormal;
 		include_once ('vues/VueConfirmerReservation.php');
 	}
 	else {
 		// récupération des données postées
-		if ( empty ($_POST ["numReservation"]) == true)  $numReservation = "";  else   $numReservation = $_POST ["numReservation"];
+		if ( empty ($_POST ["txtNumReservation"]) == true)  $numReservation = "";  else   $numReservation = $_POST ["txtNumReservation"];
 		
 		if ($numReservation == '') {
 			// si les données sont incorrectes ou incomplètes, réaffichage de la vue avec un message explicatif
-			$msgFooter = 'Données incomplètes ou incorrectes !';
+			$message = 'Données incomplètes ou incorrectes !';
+			$typeMessage = 'avertissement';
 			$themeFooter = $themeProbleme;
 			include_once ('vues/VueConfirmerReservation.php');
 		}
@@ -34,28 +38,32 @@ else {
 
 			// si le numéro de réservation n'existe pas, réaffichage de la vue
 			if ( ! $dao->existeReservation($numReservation) ) {
-				$msgFooter = "Numéro de réservation inexistant !";
+				$message = "Numéro de réservation inexistant !";
+				$typeMessage = 'avertissement';
 				$themeFooter = $themeProbleme;
 				include_once ('vues/VueConfirmerReservation.php');
 			}
 			else {
 				// si l'utilisateur n'est pas pas l'auteur de cette réservation, la confirmation est refusée
 				if ( ! $dao->estLeCreateur($nom, $numReservation) ) {
-					$msgFooter = "Vous n'êtes pas l'auteur de cette réservation !";
+					$message = "Vous n'êtes pas l'auteur de cette réservation !";
+					$typeMessage = 'avertissement';
 					$themeFooter = $themeProbleme;
 					include_once ('vues/VueConfirmerReservation.php');		
 				}
 				else {
 					// si la réservation est déjà confirmée, la confirmation est refusée
 					if ( $dao->getReservation($numReservation)->getStatus() == 0 ) {
-						$msgFooter = "Cette réservation est déjà confirmée !";
+						$message = "Cette réservation est déjà confirmée !";
+						$typeMessage = 'avertissement';
 						$themeFooter = $themeProbleme;
 						include_once ('vues/VueConfirmerReservation.php');
 					}
 					else {
 						// si la réservation est déjà passée, la confirmation est refusée
 						if ( $dao->getReservation($numReservation)->getStart_time() < time() ) {
-							$msgFooter = "Cette réservation est déjà passée !";
+							$message = "Cette réservation est déjà passée !";
+							$typeMessage = 'avertissement';
 							$themeFooter = $themeProbleme;
 							include_once ('vues/VueConfirmerReservation.php');
 						}
@@ -70,17 +78,19 @@ else {
 							
 							// envoi d'un mail de confirmation de l'enregistrement
 							$sujet = "Confirmation de réservation";
-							$message = "Nous avons bien enregistré la confirmation de la réservation N° " . $numReservation . "\n\n";
-							$message .= "Le digicode d'accès à la salle est : " . $digicode . "\n";
-							$message .= "Il est valable 1 heure avant la réservation, et pendant 1 heure après la réservation.";
-							$ok = Outils::envoyerMail($adrMail, $sujet, $message, $ADR_MAIL_EMETTEUR);
+							$contenuMail = "Nous avons bien enregistré la confirmation de la réservation N° " . $numReservation . "\n\n";
+							$contenuMail .= "Le digicode d'accès à la salle est : " . $digicode . "\n";
+							$contenuMail .= "Il est valable depuis 1 heure avant la réservation, et jusqu'à 1 heure après la réservation.";
+							$ok = Outils::envoyerMail($adrMail, $sujet, $contenuMail, $ADR_MAIL_EMETTEUR);
 							
 							if ( $ok ) {
-								$msgFooter = "Enregistrement effectué.<br>Vous allez recevoir un mail de confirmation.";
+								$message = "Enregistrement effectué.<br>Vous allez recevoir un mail de confirmation.";
+								$typeMessage = 'information';
 								$themeFooter = $themeNormal;
 							}
 							else {
-								$msgFooter = "Enregistrement effectué.<br>L'envoi du mail de confirmation a rencontré un problème.";
+								$message = "Enregistrement effectué.<br>L'envoi du mail de confirmation a rencontré un problème.";
+								$typeMessage = 'avertissement';
 								$themeFooter = $themeProbleme;
 							}
 							include_once ('vues/VueConfirmerReservation.php');

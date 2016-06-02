@@ -5,12 +5,13 @@
 	// cette vue est appelée par le contôleur controleurs/CtrlConnecter.php
 	// Création : 12/10/2015 par JM CARTRON
 	// Mise à jour : 30/5/2016 par JM CARTRON
-	
+	/*
 	// pour obliger la page à se recharger
 	header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: no-cache');
 	header('Content-Tranfer-Encoding: none');
 	header('Expires: 0');
+	*/
 ?>
 <!doctype html>
 <html>
@@ -18,6 +19,8 @@
 		<?php include_once ('vues/head.php'); ?>
 		
 		<script>
+			// version jQuery activée
+			
 			// associe une fonction à l'événement pageinit
 			$(document).bind('pageinit', function() {
 				// l'événement "click" de la case à cocher "caseAfficherMdp" est associé à la fonction "afficherMdp"
@@ -26,8 +29,8 @@
 				// selon l'état de la case, le type de la zone de saisie est "text" ou "password"
 				afficherMdp();
 				
-				// affichage du dernier mot de passe saisi
-				$('#txtMotDePasse').attr('value','<?php echo $mdp; ?>');
+				// affichage du dernier mot de passe saisi (désactivé ici, car effectué dans le code HTML du formulaire)
+				// $('#txtMotDePasse').attr('value','<?php echo $mdp; ?>');
 				
 				<?php if ($typeMessage != '') { ?>
 					// affiche la boîte de dialogue 'affichage_message'
@@ -36,7 +39,6 @@
 			} );
 
 			// selon l'état de la case, le type de la zone de saisie est "text" ou "password"
-			// Fonction jQuery
 			function afficherMdp() {
 				// tester si la case est cochée
 				if ( $("#caseAfficherMdp").is(":checked") ) {
@@ -48,7 +50,12 @@
 					$('#txtMotDePasse').attr('type', 'password');
 				};
 			}
+			// fin de la version jQuery
+			
 			/*
+			// version javaScript désactivée
+			
+			// selon l'état de la case, le type de la zone de saisie est "text" ou "password"
 			function afficherMdp()
 			{	// document.getElementById("caseAfficherMdp").checked = ! document.getElementById("caseAfficherMdp").checked;
 				if (document.getElementById("caseAfficherMdp").checked == true)
@@ -61,11 +68,12 @@
 			{	afficherMdp();
 				document.getElementById("txtMotDePasse").innerText="<?php //echo $mdp; ?>"
 			}
+			// fin de la version javaScript
 			*/
 		</script>
 	</head>
 	
-	<body onload="initialisation();">
+	<body>
 		<div data-role="page" id="page_principale">
 			<div data-role="header" data-theme="<?php echo $themeNormal; ?>">
 				<h4>M2L-GRR</h4>
@@ -93,7 +101,7 @@
 		
 								<label for="txtMotDePasse">Mot de passe :</label>
 								<input type="<?php if($afficherMdp == 'on') echo 'text'; else echo 'password'; ?>" name="txtMotDePasse" id="txtMotDePasse" data-mini="true" 
-									required autocomplete="off" placeholder="Mon mot de passe" value="<?php echo $mdp; ?>" >
+									required placeholder="Mon mot de passe" value="<?php echo $mdp; ?>" >
 							</div>														
 							<div data-role="fieldcontain" data-type="horizontal" class="ui-hide-label">
 								<label for="caseAfficherMdp">Afficher le mot de passe en clair</label>
@@ -135,10 +143,14 @@
 				
 				<?php if($debug == true) {
 					// en mise au point, on peut afficher certaines variables dans la page
-					echo "<p>SESSION['nom'] = " . $_SESSION['nom'] . "</p>";
-					echo "<p>SESSION['mdp'] = " . $_SESSION['mdp'] . "</p>";
-					echo "<p>SESSION['niveauUtilisateur'] = " . $_SESSION['niveauUtilisateur'] . "</p>";
-					echo "<p>mode = " . $afficherMdp . "</p>";
+					echo "<p>SESSION['nom'] = " . $_SESSION['nom'] . "<br>";
+					echo "SESSION['mdp'] = " . $_SESSION['mdp'] . "<br>";
+					echo "SESSION['niveauUtilisateur'] = " . $_SESSION['niveauUtilisateur'] . "<br>";
+					echo "SESSION['afficherMdp'] = " . $_SESSION['afficherMdp'] . "<br>";
+					echo "nom = " . $nom . "<br>";
+					echo "mdp = " . $mdp . "<br>";
+					echo "niveauUtilisateur = " . $niveauUtilisateur . "<br>";
+					echo "mode = " . $afficherMdp . "</p>";
 				} ?>
 			</div>
 			
