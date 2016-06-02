@@ -1,6 +1,7 @@
 <?php
 // Service web du projet Réservations M2L
 // Ecrit le 31/3/2016 par Jim
+// Modifié le 2/6/2016 par Jim
 
 // Ce service web permet à un utilisateur de consulter ses réservations à venir
 // et fournit un flux XML contenant un compte-rendu d'exécution
@@ -8,6 +9,7 @@
 // Le service web doit recevoir 2 paramètres : nom, mdp
 // Les paramètres peuvent être passés par la méthode GET (pratique pour les tests, mais à éviter en exploitation) :
 //     http://<hébergeur>/ConsulterReservations.php?nom=zenelsy&mdp=passe
+
 // Les paramètres peuvent être passés par la méthode POST (à privilégier en exploitation pour la confidentialité des données) :
 //     http://<hébergeur>/ConsulterReservations.php
 
@@ -59,7 +61,7 @@ else
 		$dao->creerLesDigicodesManquants();
 		
 		// récupération des réservations à venir créées par l'utilisateur
-		$lesReservations = $dao->listeReservations($nom);
+		$lesReservations = $dao->getLesReservations($nom);
 		$nbReponses = sizeof($lesReservations);
 	
 		if ($nbReponses == 0)

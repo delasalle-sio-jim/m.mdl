@@ -187,15 +187,20 @@ class Outils
 	// retourne true si envoi correct, false en cas de problème d'envoi
 	public static function  envoyerMail ($adresseDestinataire, $sujet, $message, $adresseEmetteur)
 	{	// utilisation d'une expression régulière pour vérifier si c'est une adresse Gmail :
-		if ( preg_match ( "#^.+@gmail\.com$#" , $adresseDestinataire) == true)
-		{	// on commence par enlever les points dans l'adresse gmail car ils ne sont pas pris en compte
+		if ( preg_match ( "#^.+@gmail\.com$#" , $adresseDestinataire) == true) {
+			// on commence par enlever les points dans l'adresse gmail car ils ne sont pas pris en compte
 			$adresseDestinataire = str_replace(".", "", $adresseDestinataire);
 			// puis on remet le point de "@gmail.com"
 			$adresseDestinataire = str_replace("@gmailcom", "@gmail.com", $adresseDestinataire);
 		}
 		// envoi du mail avec la fonction mail de PHP
-		$ok = mail($adresseDestinataire , $sujet , $message, "From: " . $adresseEmetteur);
-		return $ok;
+		try {
+			$ok = mail($adresseDestinataire , $sujet , $message, "From: " . $adresseEmetteur);
+			return $ok;
+		}
+		catch (Exception $ex) {
+			return false;
+		}
 	}
 	
 	// crée un mot de passe aléatoire de 8 caractères (4 syllabes avec 1 consonne et 1 voyelle)
