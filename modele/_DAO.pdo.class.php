@@ -3,7 +3,7 @@
 //                                                 DAO : Data Access Object
 //                   Cette classe fournit des méthodes d'accès à la bdd mrbs (projet Réservations M2L)
 //                                                 Elle utilise l'objet PDO
-//                       Auteur : JM Cartron                       Dernière modification : 30/9/2015
+//                       Auteur : JM Cartron                       Dernière modification : 3/6/2016
 // -------------------------------------------------------------------------------------------------------------------------
 
 // liste des méthodes de cette classe (dans l'ordre d'apparition dans la classe) :
@@ -13,7 +13,7 @@
 // getNiveauUtilisateur          : fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 // genererUnDigicode             : génération aléatoire d'un digicode de 6 caractères hexadécimaux
 // creerLesDigicodesManquants    : mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
-// listeReservations             : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
+// getLesReservations            : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 // existeReservation             : fournit true si la réservation ($idReservation) existe, false sinon
 // estLeCreateur                 : teste si un utilisateur ($nomUser) est le créateur d'une réservation ($idReservation)
 // getReservation                : fournit un objet Reservation à partir de son identifiant $idReservation
@@ -25,11 +25,10 @@
 // envoyerMdp                    : envoie un mail à l'utilisateur avec son nouveau mot de passe
 // testerDigicodeSalle           : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
 // testerDigicodeBatiment        : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation de salle quelconque
-// enregistrerUtilisateur        : enregistre l'utilisateur dans la bdd
+// creerUtilisateur              : enregistre l'utilisateur dans la bdd
 // aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
 // supprimerUtilisateur          : supprime l'utilisateur dans la bdd
-
-// listeSalles                   : fournit la liste des salles disponibles à la réservation
+// getLesSalles                  : fournit la liste des salles disponibles à la réservation
 
 // certaines méthodes nécessitent les fichiers Reservation.class.php, Utilisateur.class.php et Outils.class.php
 include_once ('Utilisateur.class.php');
@@ -150,13 +149,16 @@ class DAO
 		// libère les ressources du jeu de données
 		$req1->closeCursor();
 		return;
-	}	
+	}
+	
 /*
 	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
 	// cette fonction peut dépanner en cas d'absence des triggers chargés de créer les digicodes
 	// modifié par Jim le 23/9/2015
 	public function creerLesDigicodesManquants()
-	{	// préparation de la requete de recherche des réservations sans digicode
+	{	// récupération de la date du jour
+		$dateCreation = date('Y-m-d H:i:s', time());
+		// préparation de la requete de recherche des réservations sans digicode
 		$txt_req1 = "Select id from mrbs_entry where id not in (select id from mrbs_entry_digicode)";
 		$req1 = $this->cnx->prepare($txt_req1);
 		// extraction des données
@@ -164,7 +166,7 @@ class DAO
 		// extrait une ligne du résultat :
 		$uneLigne = $req1->fetch(PDO::FETCH_OBJ);
 		// tant qu'une ligne est trouvée :
-		$dateCreation = date('Y-m-d H:i:s', time());
+
 		while ($uneLigne)
 		{	// génération aléatoire d'un digicode de 6 caractères hexadécimaux
 			$digicode = $this->genererUnDigicode();
@@ -188,9 +190,9 @@ class DAO
 	// fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 	// le résultat est fourni sous forme d'une collection d'objets Reservation
 	// modifié par Jim le 30/9/2015
-	public function listeReservations($nomUser)
+	public function getLesReservations($nomUser)
 	{	// préparation de la requete de recherche
-		$txt_req = "Select mrbs_entry.id, timestamp, start_time, end_time, room_name, status, digicode";
+		$txt_req = "Select mrbs_entry.id as id_entry, timestamp, start_time, end_time, room_name, status, digicode";
 		$txt_req = $txt_req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
 		$txt_req = $txt_req . " where mrbs_entry.room_id = mrbs_room.id";
 		$txt_req = $txt_req . " and mrbs_entry.id = mrbs_entry_digicode.id";
@@ -211,7 +213,7 @@ class DAO
 		// tant qu'une ligne est trouvée :
 		while ($uneLigne)
 		{	// création d'un objet Reservation
-			$unId = utf8_encode($uneLigne->id);
+			$unId = utf8_encode($uneLigne->id_entry);
 			$unTimeStamp = utf8_encode($uneLigne->timestamp);
 			$unStartTime = utf8_encode($uneLigne->start_time);
 			$unEndTime = utf8_encode($uneLigne->end_time);
@@ -491,16 +493,16 @@ class DAO
 	}
 
 	// enregistre l'utilisateur dans la bdd
-	// modifié par Jim le 6/5/2015
-	public function enregistrerUtilisateur($name, $level, $password, $email)
+	// modifié par Jim le 26/5/2016
+	public function creerUtilisateur($unUtilisateur)
 	{	// préparation de la requete
 		$txt_req = "insert into mrbs_users (level, name, password, email) values (:level, :name, :password, :email)";
 		$req = $this->cnx->prepare($txt_req);
 		// liaison de la requête et de ses paramètres
-		$req->bindValue("level", utf8_decode($level), PDO::PARAM_STR);
-		$req->bindValue("name", utf8_decode($name), PDO::PARAM_STR);
-		$req->bindValue("password", utf8_decode(md5($password)), PDO::PARAM_STR);
-		$req->bindValue("email", utf8_decode($email), PDO::PARAM_STR);
+		$req->bindValue("level", utf8_decode($unUtilisateur->getLevel()), PDO::PARAM_STR);
+		$req->bindValue("name", utf8_decode($unUtilisateur->getName()), PDO::PARAM_STR);
+		$req->bindValue("password", utf8_decode(md5($unUtilisateur->getPassword())), PDO::PARAM_STR);
+		$req->bindValue("email", utf8_decode($unUtilisateur->getEmail()), PDO::PARAM_STR);
 		// exécution de la requete
 		$ok = $req->execute();
 		return $ok;
@@ -542,8 +544,8 @@ class DAO
 	
 	// fournit la liste des salles disponibles à la réservation
 	// le résultat est fourni sous forme d'une collection d'objets Salle
-	// modifié par Jim le 9/11/2015
-	function listeSalles()
+	// modifié par Jim le 26/5/2016
+	function getLesSalles()
 	{	// préparation de la requete de recherche
 		$txt_req = "Select mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name, mrbs_area.area_admin_email";
 		$txt_req = $txt_req . " from mrbs_room, mrbs_area";

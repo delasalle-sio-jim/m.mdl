@@ -3,7 +3,7 @@
 //                                                 DAO : Data Access Object
 //                   Cette classe fournit des méthodes d'accès à la bdd mrbs (projet Réservations M2L)
 //                                                 Elle utilise l'objet PDO
-//                       Auteur : JM Cartron                       Dernière modification : 30/9/2015
+//                       Auteur : JM Cartron                       Dernière modification : 3/6/2016
 // -------------------------------------------------------------------------------------------------------------------------
 
 // liste des méthodes de cette classe (dans l'ordre d'apparition dans la classe) :
@@ -13,7 +13,7 @@
 // getNiveauUtilisateur          : fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 // genererUnDigicode             : génération aléatoire d'un digicode de 6 caractères hexadécimaux
 // creerLesDigicodesManquants    : mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
-// listeReservations             : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
+// getLesReservations            : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 // existeReservation             : fournit true si la réservation ($idReservation) existe, false sinon
 // estLeCreateur                 : teste si un utilisateur ($nomUser) est le créateur d'une réservation ($idReservation)
 // getReservation                : fournit un objet Reservation à partir de son identifiant $idReservation
@@ -25,11 +25,10 @@
 // envoyerMdp                    : envoie un mail à l'utilisateur avec son nouveau mot de passe
 // testerDigicodeSalle           : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
 // testerDigicodeBatiment        : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation de salle quelconque
-// enregistrerUtilisateur        : enregistre l'utilisateur dans la bdd
+// creerUtilisateur              : enregistre l'utilisateur dans la bdd
 // aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
 // supprimerUtilisateur          : supprime l'utilisateur dans la bdd
-
-// listeSalles                   : fournit la liste des salles disponibles à la réservation
+// getLesSalles                  : fournit la liste des salles disponibles à la réservation
 
 // certaines méthodes nécessitent les fichiers Reservation.class.php, Utilisateur.class.php et Outils.class.php
 include_once ('Utilisateur.class.php');

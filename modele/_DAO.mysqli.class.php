@@ -3,7 +3,7 @@
 //                                                 DAO : Data Access Object
 //                   Cette classe fournit des méthodes d'accès à la bdd mrbs (projet Réservations M2L)
 //                                            Elle utilise les fonctions mysqli
-//                       Auteur : JM Cartron                       Dernière modification : 30/9/2015
+//                       Auteur : JM Cartron                       Dernière modification : 3/6/2016
 // -------------------------------------------------------------------------------------------------------------------------
 
 // liste des méthodes de cette classe (dans l'ordre d'apparition dans la classe) :
@@ -13,7 +13,7 @@
 // getNiveauUtilisateur          : fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 // genererUnDigicode             : génération aléatoire d'un digicode de 6 caractères hexadécimaux
 // creerLesDigicodesManquants    : mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
-// listeReservations             : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
+// getLesReservations            : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 // existeReservation             : fournit true si la réservation ($idReservation) existe, false sinon
 // estLeCreateur                 : teste si un utilisateur ($nomUser) est le créateur d'une réservation ($idReservation)
 // getReservation                : fournit un objet Reservation à partir de son identifiant $idReservation
@@ -25,11 +25,10 @@
 // envoyerMdp                    : envoie un mail à l'utilisateur avec son nouveau mot de passe
 // testerDigicodeSalle           : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
 // testerDigicodeBatiment        : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation de salle quelconque
-// enregistrerUtilisateur        : enregistre l'utilisateur dans la bdd
+// creerUtilisateur              : enregistre l'utilisateur dans la bdd
 // aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
 // supprimerUtilisateur          : supprime l'utilisateur dans la bdd
-
-// listeSalles                   : fournit la liste des salles disponibles à la réservation
+// getLesSalles                  : fournit la liste des salles disponibles à la réservation
 
 // certaines méthodes nécessitent les fichiers Reservation.class.php, Utilisateur.class.php et Outils.class.php
 include_once ('Utilisateur.class.php');
@@ -187,7 +186,7 @@ class DAO
 	// fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 	// le résultat est fourni sous forme d'une collection d'objets Reservation
 	// modifié par Jim le 30/9/2015
-	public function listeReservations($nomUser)
+	public function getLesReservations($nomUser)
 	{	// préparation de la requete de recherche
 		$req = "Select mrbs_entry.id, timestamp, start_time, end_time, room_name, status, digicode";
 		$req = $req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
@@ -207,19 +206,19 @@ class DAO
 		// tant qu'une ligne est trouvée :
 		while ($uneLigne)
 		{	// création d'un objet Reservation
-			$unId = utf8_encode($uneLigne->id);
-			$unTimeStamp = utf8_encode($uneLigne->timestamp);
-			$unStartTime = utf8_encode($uneLigne->start_time);
-			$unEndTime = utf8_encode($uneLigne->end_time);
-			$unRoomName = utf8_encode($uneLigne->room_name);
-			$unStatus = utf8_encode($uneLigne->status);
-			$unDigicode = utf8_encode($uneLigne->digicode);
+			$unId = utf8_encode($uneLigne['id']);
+			$unTimeStamp = utf8_encode($uneLigne['timestamp']);
+			$unStartTime = utf8_encode($uneLigne['start_time']);
+			$unEndTime = utf8_encode($uneLigne['end_time']);
+			$unRoomName = utf8_encode($uneLigne['room_name']);
+			$unStatus = utf8_encode($uneLigne['status']);
+			$unDigicode = utf8_encode($uneLigne['digicode']);
 			
 			$uneReservation = new Reservation($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode);
 			// ajout de la réservation à la collection
 			$lesReservations[] = $uneReservation;
 			// extrait la ligne suivante
-	 	$uneLigne = mysqli_fetch_array ($jdd);
+	 		$uneLigne = mysqli_fetch_array ($jdd);
 		}
 		// libère les ressources du jeu de données
 		mysqli_free_result ($jdd);
@@ -456,13 +455,13 @@ class DAO
 
 	// enregistre l'utilisateur dans la bdd
 	// modifié par Jim le 28/9/2015
-	public function enregistrerUtilisateur($name, $level, $password, $email)
+	public function creerUtilisateur($unUtilisateur)
 	{	// préparation de la requete
 		$req = "insert into mrbs_users (level, name, password, email) values (";
-		$req = $req . utf8_decode($level) . ", ";
-		$req = $req . "'" . utf8_decode($name) . "', ";
-		$req = $req . "'" . utf8_decode(md5($password)) . "', ";
-		$req = $req . "'" . utf8_decode($email) . "')";
+		$req = $req . utf8_decode($unUtilisateur->getLevel()) . ", ";
+		$req = $req . "'" . utf8_decode($unUtilisateur->getName()) . "', ";
+		$req = $req . "'" . utf8_decode(md5($unUtilisateur->getPassword())) . "', ";
+		$req = $req . "'" . utf8_decode($unUtilisateur->getEmail()) . "')";
 		// echo ($req);
 		
 		// exécution de la requete
@@ -506,7 +505,7 @@ class DAO
 	// fournit la liste des salles disponibles à la réservation
 	// le résultat est fourni sous forme d'une collection d'objets Salle
 	// modifié par Jim le 9/11/2015
-	function listeSalles()
+	function getLesSalles()
 	{	// préparation de la requete de recherche
 		$req = "Select mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name, mrbs_area.area_admin_email";
 		$req = $req . " from mrbs_room, mrbs_area";
@@ -525,13 +524,13 @@ class DAO
 			$unRoomName = utf8_encode($uneLigne['room_name']);
 			$unCapacity = utf8_encode($uneLigne['capacity']);
 			$unAreaName = utf8_encode($uneLigne['area_name']);
-			$unAeraAdminEmail = utf8_encode($uneLigne['area_admin_email']);
+			$unAreaAdminEmail = utf8_encode($uneLigne['area_admin_email']);
 				
-			$uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAeraAdminEmail);
+			$uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAreaAdminEmail);
 			// ajout de la salle à la collection
 			$lesSalles[] = $uneSalle;
 			// extrait la ligne suivante
-	 	$uneLigne = mysqli_fetch_array ($jdd);
+	 		$uneLigne = mysqli_fetch_array ($jdd);
 		}
 		// libère les ressources du jeu de données
 		mysqli_free_result ($jdd);

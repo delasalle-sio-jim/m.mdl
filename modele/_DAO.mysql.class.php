@@ -3,7 +3,7 @@
 //                                                 DAO : Data Access Object
 //                   Cette classe fournit des méthodes d'accès à la bdd mrbs (projet Réservations M2L)
 //                                             Elle utilise les fonctions mysql
-//                       Auteur : JM Cartron                       Dernière modification : 12/10/2015
+//                       Auteur : JM Cartron                       Dernière modification : 3/6/2016
 // -------------------------------------------------------------------------------------------------------------------------
 
 // liste des méthodes de cette classe (dans l'ordre d'apparition dans la classe) :
@@ -13,7 +13,7 @@
 // getNiveauUtilisateur          : fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 // genererUnDigicode             : génération aléatoire d'un digicode de 6 caractères hexadécimaux
 // creerLesDigicodesManquants    : mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
-// listeReservations             : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
+// getLesReservations            : fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 // existeReservation             : fournit true si la réservation ($idReservation) existe, false sinon
 // estLeCreateur                 : teste si un utilisateur ($nomUser) est le créateur d'une réservation ($idReservation)
 // getReservation                : fournit un objet Reservation à partir de son identifiant $idReservation
@@ -25,11 +25,10 @@
 // envoyerMdp                    : envoie un mail à l'utilisateur avec son nouveau mot de passe
 // testerDigicodeSalle           : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
 // testerDigicodeBatiment        : teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation de salle quelconque
-// enregistrerUtilisateur        : enregistre l'utilisateur dans la bdd
+// creerUtilisateur              : enregistre l'utilisateur dans la bdd
 // aPasseDesReservations         : recherche si l'utilisateur ($name) a passé des réservations à venir
 // supprimerUtilisateur          : supprime l'utilisateur dans la bdd
-
-// listeSalles                   : fournit la liste des salles disponibles à la réservation
+// getLesSalles                  : fournit la liste des salles disponibles à la réservation
 
 // certaines méthodes nécessitent les fichiers Reservation.class.php, Utilisateur.class.php et Outils.class.php
 include_once ('Utilisateur.class.php');
@@ -186,7 +185,7 @@ class DAO
 	// fournit la liste des réservations à venir d'un utilisateur ($nomUser)
 	// le résultat est fourni sous forme d'une collection d'objets Reservation
 	// modifié par Jim le 12/10/2015
-	public function listeReservations($nomUser)
+	public function getLesReservations($nomUser)
 	{	// préparation de la requete de recherche
 		$req = "Select mrbs_entry.id, timestamp, start_time, end_time, room_name, status, digicode";
 		$req = $req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
@@ -454,14 +453,14 @@ class DAO
 	}
 
 	// enregistre l'utilisateur dans la bdd
-	// modifié par Jim le 28/9/2015
-	public function enregistrerUtilisateur($name, $level, $password, $email)
+	// modifié par Jim le 26/5/2016
+	public function creerUtilisateur($unUtilisateur)
 	{	// préparation de la requete
 		$req = "insert into mrbs_users (level, name, password, email) values (";
-		$req = $req . utf8_decode($level) . ", ";
-		$req = $req . "'" . utf8_decode($name) . "', ";
-		$req = $req . "'" . utf8_decode(md5($password)) . "', ";
-		$req = $req . "'" . utf8_decode($email) . "')";
+		$req = $req . utf8_decode($unUtilisateur->getLevel()) . ", ";
+		$req = $req . "'" . utf8_decode($unUtilisateur->getName()) . "', ";
+		$req = $req . "'" . utf8_decode(md5($unUtilisateur->getPassword())) . "', ";
+		$req = $req . "'" . utf8_decode($unUtilisateur->getEmail()) . "')";
 		// echo ($req);
 		
 		// exécution de la requete
@@ -505,7 +504,7 @@ class DAO
 	// fournit la liste des salles disponibles à la réservation
 	// le résultat est fourni sous forme d'une collection d'objets Salle
 	// modifié par Jim le 9/11/2015
-	function listeSalles()
+	function getLesSalles()
 	{	// préparation de la requete de recherche
 		$req = "Select mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name, mrbs_area.area_admin_email";
 		$req = $req . " from mrbs_room, mrbs_area";
@@ -524,9 +523,9 @@ class DAO
 			$unRoomName = utf8_encode($uneLigne['room_name']);
 			$unCapacity = utf8_encode($uneLigne['capacity']);
 			$unAreaName = utf8_encode($uneLigne['area_name']);
-			$unAeraAdminEmail = utf8_encode($uneLigne['area_admin_email']);
+			$unAreaAdminEmail = utf8_encode($uneLigne['area_admin_email']);
 				
-			$uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAeraAdminEmail);
+			$uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAreaAdminEmail);
 			// ajout de la salle à la collection
 			$lesSalles[] = $uneSalle;
 			// extrait la ligne suivante
