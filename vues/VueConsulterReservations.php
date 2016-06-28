@@ -23,7 +23,7 @@
 				<p style="text-align: center;"><?php echo $message; ?></p>
 				<ul data-role="listview" style="margin-top: 5px;">
 				<?php
-				// Avec JQuery Mobile, les réservations sont affichées à l'aide d'une liste <ul>
+				// Avec jQuery Mobile, les réservations sont affichées à l'aide d'une liste <ul>
 				// chaque réservation est affichée à l'aide d'un élément de liste <li>
 				// chaque élément de liste <li> peut contenir des titres et des paragraphes
 

@@ -4,7 +4,7 @@
 	// Rôle : visualiser la vue de connexion d'un utilisateur
 	// cette vue est appelée par le contôleur controleurs/CtrlConnecter.php
 	// Création : 12/10/2015 par JM CARTRON
-	// Mise à jour : 30/5/2016 par JM CARTRON
+	// Mise à jour : 28/6/2016 par JM CARTRON
 	/*
 	// pour obliger la page à se recharger
 	header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
@@ -85,6 +85,7 @@
 						<h3>Bienvenue sur M2L Réservations...</h3>
 						<p>L'application de suivi des réservations de la <b>Maison des Ligues de Lorraine (M2L)</b> vous propose les services suivants :</p>
 						<ul>
+							<li>Consulter la liste des salles</li>
 							<li>Consulter vos réservations</li>
 							<li>Confirmer une réservation</li>
 							<li>Annuler une réservation</li>

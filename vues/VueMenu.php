@@ -4,7 +4,8 @@
 	// Rôle : visualiser le menu de l'utilisateur ou de l'administrateur
 	// cette vue est appelée par le contôleur controleurs/CtrlMenu.php
 	// la barre d'entête possède un lien de déconnexion permettant de retourner à la page de connexion
-	// Ecrit le 12/10/2015 par Jim
+	// écrit par Jim le 12/10/2015
+	// modifié par Jim le 28/6/2016
 ?>
 <!doctype html>
 <html>
@@ -20,6 +21,7 @@
 			<div data-role="content">
 				<h4 style="text-align: center; margin-top: 20px; margin-bottom: 20px;">Utilisateur : <?php echo $nom; ?></h4>
 				<ul data-role="listview" data-inset="true">
+					<li><a href="index.php?action=ConsulterSalles" data-transition="<?php echo $transition; ?>">Consulter les salles</a></li>
 					<li><a href="index.php?action=ConsulterReservations" data-transition="<?php echo $transition; ?>">Consulter mes réservations</a></li>
 					<li><a href="index.php?action=ConfirmerReservation" data-transition="<?php echo $transition; ?>">Confirmer une réservation</a></li>
 					<li><a href="index.php?action=AnnulerReservation" data-transition="<?php echo $transition; ?>">Annuler une réservation</a></li>

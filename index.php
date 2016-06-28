@@ -2,8 +2,8 @@
 // Projet Réservations M2L - version web mobile
 // fichier : index.php
 // Rôle : analyser toutes les demandes (appels de page ou traitements de formulaires) et activer le contrôleur chargé de traiter l'action demandée
-// Création : 5/11/2015 par JM CARTRON
-// Mise à jour : 30/5/2016 par JM CARTRON
+// écrit par Jim le 5/11/2015
+// modifié par Jim le 28/6/2016
 
 // Ce fichier est appelé par tous les liens internes, et par la validation de tous les formulaires
 // il est appelé avec un paramètre action qui peut prendre les valeurs suivantes :
@@ -66,6 +66,9 @@ switch($action){
 	}
 	case 'DemanderMdp': {
 		include_once ('controleurs/CtrlDemanderMdp.php'); break;
+	}
+	case 'ConsulterSalles': {
+		include_once ('controleurs/CtrlConsulterSalles.php'); break;
 	}
 	case 'ConsulterReservations': {
 		include_once ('controleurs/CtrlConsulterReservations.php'); break;

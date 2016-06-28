@@ -1,10 +1,9 @@
 <?php
 // Projet Réservations M2L - version web mobile
-// fichier : controleurs/VueConsulterReservations.php
+// fichier : controleurs/CtrlConsulterReservations.php
 // Rôle : traiter la demande de consultation des réservations d'un utilisateur
-// cette vue est appelée par le contôleur controleurs/CtrlConsulterReservations.php
-// Création : 12/10/2015 par JM CARTRON
-// Mise à jour : 31/5/2016 par JM CARTRON
+// écrit par Jim le 12/10/2015
+// modifié par Jim le 28/6/2016
 
 // on vérifie si le demandeur de cette action est bien authentifié
 if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
@@ -26,7 +25,7 @@ else {
 	// mémorisation du nombre de réservations
 	$nbReponses = sizeof($lesReservations);
 
-	// préparation d'un message dans le pied de page (footer)
+	// préparation d'un message précédent la liste
 	if ($nbReponses == 0) {
 		$message = "Vous n'avez aucune réservation !";
 	}
