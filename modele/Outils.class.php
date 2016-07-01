@@ -80,12 +80,15 @@ class Outils
 				return false;
 			else
 			{   // cas du mois de février
-				// % est l'op�rateur modulo ; il permet de tester si $an est multiple de 4, de 100 ou de 400
-				$bissextile = (($an % 4) == 0 && ($an % 100) != 0) || ($an % 400) == 0;
+				// % est l'opérateur modulo ; il permet de tester si $an est multiple de 4, de 100 ou de 400
+				if ((($an % 4) == 0 && ($an % 100) != 0) || ($an % 400) == 0)
+					$bissextile = true;
+				else
+					$bissextile = false;
 				if ( $mois == 2 && $bissextile == false && $jour > 28 )
 					return false;
 				else
-				{   if ( $mois == 2 && $bissextile == false && $jour > 29 )
+				{   if ( $mois == 2 && $bissextile == true && $jour > 29 )
 					{   return false;
 					}
 				}
