@@ -1,7 +1,7 @@
 <?php
 // Service web du projet Réservations M2L
 // Ecrit le 31/3/2016 par Jim
-// Modifié le 3/6/2016 par Jim
+// Modifié le 3/7/2016 par Jim
 
 // Ce service web permet à un utilisateur de consulter la liste des salles proposées à la réservation
 // et fournit un flux XML contenant un compte-rendu d'exécution
@@ -105,8 +105,6 @@ function creerFluxXML($msg, $lesSalles)
 			$elt_salle->appendChild($elt_capacity);
 			$elt_area_name = $doc->createElement('area_name', $uneSalle->getAreaName());
 			$elt_salle->appendChild($elt_area_name);
-			$elt_area_admin_email   = $doc->createElement('area_admin_email', $uneSalle->getAreaAdminEmail());
-			$elt_salle->appendChild($elt_area_admin_email);
 		}
 	}
 	// Mise en forme finale

@@ -3,7 +3,7 @@
 // fichier : modele/Salle.class.php
 // Rôle : la classe Salle représente les salles pouvant faire l'objet d'une réservation
 // Création : 5/11/2015 par JM CARTRON
-// Mise à jour : 24/5/2016 par JM CARTRON
+// Mise à jour : 3/7/2016 par JM CARTRON
 
 class Salle
 {
@@ -15,18 +15,16 @@ class Salle
 	private $room_name;			// nom de la salle
 	private $capacity;			// capacité de la salle
 	private $area_name;			// nom du domaine de la salle
-	private $area_admin_email;	// adresse mail de l'administrateur du domaine
 
 	// ------------------------------------------------------------------------------------------------------
 	// ----------------------------------------- Constructeur -----------------------------------------------
 	// ------------------------------------------------------------------------------------------------------
 	
-	public function Salle($unId, $unRoomName, $unCapacity, $unAreaName, $unAeraAdminEmail) {
+	public function Salle($unId, $unRoomName, $unCapacity, $unAreaName) {
 		$this->id = $unId;
 		$this->room_name = $unRoomName;
 		$this->capacity = $unCapacity;
 		$this->area_name = $unAreaName;
-		$this->area_admin_email = $unAeraAdminEmail;
 	}
 
 	// ------------------------------------------------------------------------------------------------------
@@ -45,9 +43,6 @@ class Salle
 	public function getAreaName()	{return $this->area_name;}
 	public function setAreaName($unAreaName) {$this->area_name = $unAreaName;}
 
-	public function getAreaAdminEmail()	{return $this->area_admin_email;}
-	public function setAreaAdminEmail($unAreaAdminEmail) {$this->area_admin_email = $unAreaAdminEmail;}
-
 	// ------------------------------------------------------------------------------------------------------
 	// ---------------------------------------- Méthodes d'instances ----------------------------------------
 	// ------------------------------------------------------------------------------------------------------
@@ -58,7 +53,6 @@ class Salle
 		$msg .= "room_name : " . $this->room_name . "<br>";
 		$msg .= "capacity : " . $this->capacity . "<br>";
 		$msg .= "area_name : " . $this->area_name . "<br>";
-		$msg .= "area_admin_email : " . $this->area_admin_email . "<br>";
 		return $msg;
 	}
 	
