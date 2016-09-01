@@ -19,7 +19,7 @@
 include_once ('DAO.class.php');
 $dao = new DAO();
 
-/*
+
 // test de la méthode getNiveauUtilisateur --------------------------------------------------------
 // modifié par Jim le 24/9/2015
 echo "<h3>Test de getNiveauUtilisateur : </h3>";
@@ -29,25 +29,25 @@ $niveauUtilisateur = $dao->getNiveauUtilisateur('admin', 'adminnnnn');
 echo "NiveauUtilisateur de ('admin', 'adminnnnn') : <b>" . $niveauUtilisateur . "</b><br>";
 $niveauUtilisateur = $dao->getNiveauUtilisateur('guesdonm', 'passe');
 echo "NiveauUtilisateur de ('guesdonm', 'passe') : <b>" . $niveauUtilisateur . "</b></p>";
-*/
 
-/*
+
+
 // test de la méthode genererUnDigicode -----------------------------------------------------------
 // modifié par Jim le 24/9/2015
 echo "<h3>Test de genererUnDigicode : </h3>";
 echo "<p>Un digicode aléatoire : <b>" . $dao->genererUnDigicode() . "</b><br>";
 echo "Un digicode aléatoire : <b>" . $dao->genererUnDigicode() . "</b><br>";
 echo "Un digicode aléatoire : <b>" . $dao->genererUnDigicode() . "</b><p>";
-*/
 
-/*
+
+
 // test de la méthode creerLesDigicodesManquants --------------------------------------------------
 // modifié par Jim le 24/9/2015
 echo "<h3>Test de creerLesDigicodesManquants : </h3>";
 $dao->creerLesDigicodesManquants();
 echo "<p>Pour ce test, videz auparavant la table <b>mrbs_entry_digicode</b><br>";
 echo " puis vérifiez que la table est reconstruite après exécution du test.</p>";
-*/
+
 
 /*
 // test de la méthode getLesReservations ----------------------------------------------------------
@@ -256,7 +256,7 @@ else
 	echo "<p>Echec lors de la suppression de l'utilisateur !</p>";
 */
 
-
+/*
 // test de la méthode getLesSalles ----------------------------------------------------------------
 // modifié par Jim le 26/5/2016
 echo "<h3>Test de getLesSalles : </h3>";
@@ -268,7 +268,7 @@ foreach ($lesSalles as $uneSalle)
 {	echo ($uneSalle->getRoom_name());
 	echo ('<br>');
 }
-
+*/
 
 // ferme la connexion à MySQL :
 unset($dao);
