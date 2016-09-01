@@ -3,7 +3,7 @@
 // fichier : index.php
 // Rôle : analyser toutes les demandes (appels de page ou traitements de formulaires) et activer le contrôleur chargé de traiter l'action demandée
 // écrit par Jim le 5/11/2015
-// modifié par Jim le 28/6/2016
+// modifié par Jim le 1/9/2016
 
 // Ce fichier est appelé par tous les liens internes, et par la validation de tous les formulaires
 // il est appelé avec un paramètre action qui peut prendre les valeurs suivantes :
@@ -11,6 +11,7 @@
 //    index.php?action=Connecter              : pour afficher la page de connexion
 //    index.php?action=Menu                   : pour afficher le menu
 //    index.php?action=DemanderMdp            : pour afficher la page "mot de passe oublié"
+//    index.php?action=ConsulterSalles        : pour afficher la liste des salles disponibles en réservation
 //    index.php?action=ConsulterReservations  : pour afficher la liste des réservations de l'utilisateur
 //    index.php?action=ConfirmerReservation   : pour afficher la page de confirmation d'une réservation
 //    index.php?action=AnnulerReservation     : pour afficher la page de suppression d'une réservation
@@ -36,10 +37,7 @@ if ( ! isset ($_GET['action']) == true)  $action = '';  else   $action = $_GET['
 
 // lors d'une première connexion, ou après une déconnexion, on initialise à vide les variables de session
 if ($action == '' || $action == 'Deconnecter')
-{	//$_SESSION['nom'] = '';
-	//$_SESSION['mdp'] = '';
-	//$_SESSION['niveauUtilisateur'] = '';
-	unset ($_SESSION['nom']);
+{	unset ($_SESSION['nom']);
 	unset ($_SESSION['mdp']);
 	unset ($_SESSION['niveauUtilisateur']);
 	unset ($_SESSION['afficherMdp']);
