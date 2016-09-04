@@ -3,7 +3,7 @@
 // fichier : modele/Outils.test.php
 // Test de la classe Outils.class.php
 // Création : 30/6/2016 par JM CARTRON
-// Mise à jour : 30/6/2016 par JM CARTRON
+// Mise à jour : 4/9/2016 par JM CARTRON
 
 // inclusion de la classe Outils
 include_once ('Outils.class.php');
@@ -98,13 +98,16 @@ echo ('Un mot de passe : ' . Outils::creerMdp() . '<br>');
 echo ('<br>');
 
 // test de la méthode envoyerMail------------------------------------------------------------------
-$adresseDestinataire = "jean.michel.cartron@gmail.com";
+// ATTENTION : remplacez l'adr destinataire par votre adresse pour pouvoir vérifier la réception du mail
+$adresseDestinataire = "delasalle.sio.cartron.j@gmail.com";
 $sujet = "sujet du test";
 $message = "corps du message";
 $adresseEmetteur = "delasalle.sio.eleve@gmail.com";
-//Outils::envoyerMail ($adresseDestinataire, $sujet, $message, $adresseEmetteur);
+$ok = false;
+//$ok = Outils::envoyerMail ($adresseDestinataire, $sujet, $message, $adresseEmetteur);
 echo ('<b>Test de la méthode envoyerMail : </b><br>');
-echo ('Un mail vient d\'être envoyé !<br>');
+if ($ok == true) echo ('Un mail vient d\'être envoyé !<br>');
+else echo ('L\'envoi du mail a rencontré un problème !<br>');
 echo ('<br>');
 
 // test de la méthode estUnCodePostalValide -------------------------------------------------------
@@ -142,9 +145,15 @@ echo ('$resultat : ' . $resultat . '<br>');
 echo ('<br>');
 
 // test de la méthode estUneDateValide ---------------------------------------------------------
-$uneDate = '31/12/2016';
+$uneDate = '31/13/2016';
 if ( Outils::estUneDateValide($uneDate) ) $resultat = 'vrai'; else $resultat = 'faux';
 echo ('<b>Test de la méthode estUneDateValide : </b><br>');
+echo ('$uneDate : ' . $uneDate . '<br>');
+echo ('$resultat : ' . $resultat . '<br>');
+echo ('<br>');
+
+$uneDate = '31/12/2016';
+if ( Outils::estUneDateValide($uneDate) ) $resultat = 'vrai'; else $resultat = 'faux';
 echo ('$uneDate : ' . $uneDate . '<br>');
 echo ('$resultat : ' . $resultat . '<br>');
 echo ('<br>');
