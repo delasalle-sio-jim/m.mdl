@@ -190,6 +190,12 @@ echo ('$unNumero : ' . $unNumero . '<br>');
 echo ('$resultat : ' . $resultat . '<br>');
 echo ('<br>');
 
+$unNumero = '11,22,33,44,55';
+if ( Outils::estUnNumTelValide($unNumero) ) $resultat = 'vrai'; else $resultat = 'faux';
+echo ('$unNumero : ' . $unNumero . '<br>');
+echo ('$resultat : ' . $resultat . '<br>');
+echo ('<br>');
+
 $unNumero = '11-22-33-44-55';
 if ( Outils::estUnNumTelValide($unNumero) ) $resultat = 'vrai'; else $resultat = 'faux';
 echo ('$unNumero : ' . $unNumero . '<br>');

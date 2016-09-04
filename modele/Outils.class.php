@@ -64,7 +64,7 @@ class Outils
 	{	if ($lePrenom != "")
 		{	$longueur = strlen($lePrenom);
 			$position = strpos($lePrenom, "-");
-			if ($position == "")
+			if ($position == 0)
 			{	$partie1 = substr ($lePrenom, 0 , 1);
 				$partie2 = substr ($lePrenom, 1 , $longueur-1);
 				$lePrenom = strtoupper($partie1) . strtolower($partie2);
@@ -174,7 +174,7 @@ class Outils
 	// fournit true si $adrMailAvalider est une adresse valide, false sinon
 	public static function  estUneAdrMailValide ($adrMailAvalider)
 	{	// utilisation d'une expression régulière pour vérifier une adresse mail :
-		$EXPRESSION = "#^.+@.+\\..+$#";
+		$EXPRESSION = "#^.+@.+\..+$#";
 		// on retourne true si l'adresse est bonne, mais aussi si l'adresse est vide :
 		if ( preg_match ( $EXPRESSION , $adrMailAvalider) == true || $adrMailAvalider == "" ) return true; else return false;
 	}
@@ -225,8 +225,10 @@ class Outils
 	
 	// fournit true si $numTelAvalider est un numéro de téléphone valide, false sinon
 	public static function  estUnNumTelValide ($numTelAvalider)
-	{	// utilisation d'une expression régulière pour vérifier un numéro de téléphone :
-		$EXPRESSION = "#^([0-9]{2,2}( |\\.|-|_|,|/)?){4,4}[0-9]{2,2}$#";
+	{	// utilisation d'une expression régulière pour vérifier un numéro de téléphone
+		// les séparateurs entre les groupes de 2 chiffres sont facultatifs
+		// les seuls séparateurs autorisés sont l'espace, le point, le tiret, le tiret bas (underscore) et le slash (/)
+		$EXPRESSION = "#^([0-9]{2,2}( |\.|-|_|/)?){4,4}[0-9]{2,2}$#";
 		// on retourne true si le numéro est bon, mais aussi si le numéro est vide :
 		if ( preg_match ( $EXPRESSION , $numTelAvalider) == true || $numTelAvalider == "" ) return true; else return false;
 	}
